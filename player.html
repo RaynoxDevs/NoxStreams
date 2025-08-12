@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta name="description" content="Regardez gratuitement vos animes en streaming HD sur NoxStream">
+  <meta property="og:title" content="NoxStream - Player">
+  <meta property="og:description" content="Regardez gratuitement vos animes en streaming HD sur NoxStream">
+  <meta property="og:image" content="https://i.ibb.co/23m5zJwt/logo-base.jpg">
+  <meta charset="UTF-8" />
+  <meta property="og:url" content="https://noxstream.xyz" />
+  <meta property="og:type" content="website" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pageTitle">NoxStream - Player</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://i.ibb.co/23m5zJwt/logo-base.jpg" type="image/png" />
+  <style>
+    /* === FUTURISTIC COLOR PALETTE === */
+    :root {
+      /* Core dark theme */
+      --bg-primary: #000a0f;
+      --bg-secondary: #001016;
+      --bg-tertiary: #001621;
+      --bg-card: #002028;
+      --bg-card-hover: #003040;
+      
+      /* Neon colors */
+      --neon-primary: #00d4ff;
+      --neon-secondary: #8b5cf6;
+      --neon-accent: #a855f7;
+      --neon-pink: #f472b6;
+      --neon-green: #10b981;
+      --neon-orange: #f59e0b;
+      
+      /* Text colors */
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --text-neon: #00d4ff;
+      
+      /* Glass morphism */
+      --glass-bg: rgba(0, 212, 255, 0.1);
+      --glass-border: rgba(0, 212, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      
+      /* Glows and shadows */
+      --glow-primary: 0 0 20px rgba(0, 212, 255, 0.5);
+      --glow-secondary: 0 0 30px rgba(139, 92, 246, 0.4);
+      --glow-strong: 0 0 40px rgba(0, 212, 255, 0.8);
+      --shadow-elevated: 0 25px 50px rgba(0, 0, 0, 0.6);
+      
+      /* Gradients */
+      --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 50%, #a855f7 100%);
+      --gradient-card: linear-gradient(145deg, rgba(0, 32, 40, 0.8) 0%, rgba(0, 48, 64, 0.6) 100%);
+      --gradient-border: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+      
+      /* Animation timings */
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bouncy: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* === GLOBAL RESET & BASE === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* === ANIMATED BACKGROUND === */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+      animation: backgroundPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes backgroundPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* === FUTURISTIC HEADER === */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 10, 15, 0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transition: all var(--transition-smooth);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--gradient-border);
+      animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .logo {
+      height: 45px;
+      width: auto;
+      filter: brightness(1.2) saturate(1.1);
+      transition: all var(--transition-smooth);
+      position: relative;
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      background: var(--gradient-primary);
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
+      z-index: -1;
+      filter: blur(8px);
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotateY(5deg);
+      filter: brightness(1.4) saturate(1.3);
+    }
+
+    .logo:hover::after {
+      opacity: 0.3;
+    }
+
+    /* === BACK BUTTON === */
+    .back-btn {
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-secondary);
+      padding: 0.8rem 1.5rem;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .back-btn:hover {
+      color: var(--text-primary);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: var(--glow-primary);
+      border-color: var(--neon-primary);
+    }
+
+    .back-btn:hover::before {
+      left: 100%;
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 90px;
+      padding: 0;
+      width: 100%;
+      min-height: calc(100vh - 90px);
+      display: flex;
+      flex-direction: column;
+    }
+/* Pour Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px; /* largeur de la barre verticale */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* fond de la zone */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0a78a7; /* couleur de la barre */
+  border-radius: 10px; /* arrondi */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #13a5e0; /* couleur au survol */
+}
+
+/* Pour Firefox */
+* {
+  scrollbar-width: thin; /* barre fine */
+  scrollbar-color: #0a78a7 transparent; /* couleur / fond */
+}
+
+    /* === PLAYER SECTION === */
+    .player-section {
+      display: flex;
+      flex: 1;
+      gap: 2rem;
+      padding: 2rem;
+      min-height: calc(100vh - 200px);
+      align-items: flex-start;
+    }
+
+    .player-container-wrapper {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .player-header {
+      background: var(--gradient-card);
+      padding: 1.5rem;
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px);
+    }
+
+    .anime-title {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: 'Orbitron', monospace;
+      color: var(--text-primary);
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .episode-info {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .player-container {
+      flex: 1;
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      padding-top: 56.25%; /* 16:9 */
+  height: 0;
+    }
+
+    .player-container iframe {
+       position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+      border: none;
+    }
+
+    /* === ANIME INFO SIDEBAR === */
+    .anime-info-sidebar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 400px;
+      max-height: 700px; /* même hauteur que le player */
+  overflow-y: auto; /* scroll interne si trop de contenu */
+
+    }
+
+    .anime-poster {
+      background: var(--gradient-card);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+      position: relative;
+    }
+
+    .anime-poster img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+
+    .anime-poster .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      background: var(--bg-card);
+    }
+
+    .anime-details {
+      background: var(--gradient-card);
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px);
+    }
+
+    .rating-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .rating-score {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      box-shadow: var(--glow-primary);
+    }
+
+    .star-rating {
+      display: flex;
+      gap: 2px;
+    }
+
+    .star {
+      color: #ffd700;
+      font-size: 1.2rem;
+    }
+
+    .anime-synopsis {
+      margin-top: 1rem;
+      max-height: 200px; 
+      overflow-y: auto;
+    }
+
+    .synopsis-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--neon-primary);
+    }
+
+    .synopsis-text {
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .anime-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .stat-item {
+      background: rgba(0, 212, 255, 0.1);
+      padding: 0.8rem;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+    }
+
+    .stat-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--neon-primary);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .genres-section {
+      margin-top: 1rem;
+    }
+
+    .genres-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .genre-tag {
+      background: rgba(139, 92, 246, 0.2);
+      color: var(--neon-secondary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    /* === CONTROLS SECTION === */
+    .controls-section {
+      background: rgba(0, 16, 22, 0.95);
+      border-top: 1px solid var(--glass-border);
+      padding: 2rem;
+      backdrop-filter: blur(15px);
+    }
+
+    .controls {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .episode-nav {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 1.2rem 2.5rem;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      transition: all var(--transition-bouncy);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: var(--glow-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .episode-nav::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .episode-nav:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: var(--glow-strong);
+    }
+
+    .episode-nav:hover::before {
+      left: 100%;
+    }
+
+    .episode-nav:disabled {
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .episode-nav:disabled:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .controls select {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 2px solid var(--glass-border);
+      padding: 1.2rem 2rem;
+      border-radius: 15px;
+      font-size: 1.1rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      backdrop-filter: blur(10px);
+      min-width: 120px;
+    }
+
+    .controls select:focus {
+      outline: none;
+      border-color: var(--neon-primary);
+      box-shadow: var(--glow-primary);
+      transform: scale(1.02);
+    }
+
+    .controls select option {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      padding: 0.5rem;
+    }
+
+    /* === INFO PANEL === */
+    .info-panel {
+      background: var(--gradient-card);
+      border-top: 1px solid var(--glass-border);
+      padding: 1.5rem 2rem;
+      backdrop-filter: blur(15px);
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+      background: rgba(0, 212, 255, 0.1);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      transition: all var(--transition-smooth);
+      color: var(--text-secondary);
+    }
+
+    .info-item:hover {
+      background: rgba(0, 212, 255, 0.2);
+      border-color: var(--neon-primary);
+      color: var(--text-neon);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+    }
+
+    /* === LOADING ANIMATION === */
+    .loading {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      border: 3px solid rgba(0, 212, 255, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--neon-primary);
+      animation: loadingSpin 1s ease-in-out infinite;
+      box-shadow: 0 0 10px var(--neon-primary);
+    }
+
+    @keyframes loadingSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* === ERROR MESSAGE === */
+    .error-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-card);
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  font-family: 'Orbitron', monospace;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 20px;
+}
+
+    .error-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: var(--neon-primary);
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 1200px) {
+      .player-section {
+        flex-direction: column;
+      }
+      
+      .anime-info-sidebar {
+        max-width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      
+      .anime-poster {
+        min-width: 250px;
+      }
+      
+      .anime-details {
+        min-width: 300px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem;
+      }
+      
+      .player-section {
+        padding: 1rem;
+        gap: 1rem;
+      }
+      
+      .anime-info-sidebar {
+        flex-direction: column;
+      }
+      
+      .anime-title {
+        font-size: 1.5rem;
+      }
+      
+      .controls {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .episode-nav {
+        width: 100%;
+        justify-content: center;
+        padding: 1rem 2rem;
+      }
+      
+      .controls select {
+        width: 100%;
+        padding: 1rem;
+      }
+      
+      .anime-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .anime-title {
+        font-size: 1.3rem;
+      }
+      
+      .back-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+      
+      .player-section {
+        padding: 0.5rem;
+      }
+    }
+
+    /* === ANIMATIONS === */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .player-section {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .controls-section {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    .anime-info-sidebar > * {
+      animation: fadeInUp 0.4s ease-out;
+    }
+
+    .anime-info-sidebar > *:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .anime-info-sidebar > *:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <a href="index.html">
+        <img src="https://i.ibb.co/GftxCw5p/name-band-base.jpg" alt="Logo NoxStream" class="logo" />
+      </a>
+      <a href="index.html" class="back-btn">
+        <span>←</span>
+        <span>Retour</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="player-section">
+      <div class="player-container-wrapper">
+        <div class="player-header">
+          <h1 class="anime-title" id="animeTitle">Titre de l'anime</h1>
+          <div class="episode-info" id="episodeInfo">Épisode 1</div>
+        </div>
+        
+        <div class="player-container" id="playerContainer">
+          <iframe id="animePlayer" src="" frameborder="0" scrolling="no" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <div class="anime-info-sidebar">
+        <div class="anime-poster">
+          <div class="loading" id="posterLoading">
+            <div class="loading"></div>
+          </div>
+          <img id="animePoster" style="display: none;" alt="Poster de l'anime">
+        </div>
+
+        <div class="anime-details">
+          <div class="rating-section" id="ratingSection" style="display: none;">
+            <div class="rating-score" id="ratingScore">-</div>
+            <div class="star-rating" id="starRating"></div>
+          </div>
+
+          <div class="anime-stats" id="animeStats" style="display: none;">
+            <div class="stat-item">
+              <div class="stat-value" id="statusValue">-</div>
+              <div class="stat-label">Statut</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="episodesValue">-</div>
+              <div class="stat-label">Épisodes</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="yearValue">-</div>
+              <div class="stat-label">Année</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="studioValue">-</div>
+              <div class="stat-label">Studio</div>
+            </div>
+          </div>
+
+          <div class="genres-section" id="genresSection" style="display: none;">
+            <div class="synopsis-title">Genres</div>
+            <div class="genres-list" id="genresList"></div>
+          </div>
+
+          <div class="anime-synopsis" id="animeSynopsis" style="display: none;">
+            <div class="synopsis-title">Synopsis</div>
+            <div class="synopsis-text" id="synopsisText"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="controls-section">
+      <div class="controls">
+        <button id="prev-episode" class="episode-nav">
+          <span>◀️</span>
+          <span>Précédent</span>
+        </button>
+        
+        <button id="next-episode" class="episode-nav">
+          <span>Suivant</span>
+          <span>▶️</span>
+        </button>
+
+        <select id="languageSelector">
+          <option value="vf">VF</option>
+          <option value="vostfr">VOSTFR</option>
+        </select>
+
+        <select id="episodeSelector">
+          <!-- Episodes will be populated dynamically -->
+        </select>
+      </div>
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+      <!-- Info will be populated dynamically -->
+    </div>
+  </main>
+
+  <script>
+    // Global variables
+    let episodeData = {};
+    let currentTitle = null;
+    let currentLang = 'vf';
+    let currentEpisode = 0;
+    let animeMetadata = null;
+
+    // Jikan API configuration
+    const JIKAN_API_BASE = 'https://api.jikan.moe/v4';
+    const API_CACHE = new Map();
+    const CACHE_DURATION = 1000 * 60 * 30; // 30 minutes
+
+    function slugify(text) {
+      return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
+    function getUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      
+      const title = params.get('title');
+      const lang = params.get('lang') || 'vf';
+      const episode = parseInt(params.get('episode')) || 0;
+      
+      console.log('Paramètres URL détectés:', { title, lang, episode });
+      
+      return { title, lang, episode };
+    }
+
+    // Fonction pour trouver le titre exact
+    function findExactTitle(searchTitle) {
+      if (!searchTitle) return null;
+      
+      console.log(`Recherche du titre exact pour: "${searchTitle}"`);
+      
+      if (episodeData[searchTitle]) {
+        console.log(`Titre exact trouvé: "${searchTitle}"`);
+        return searchTitle;
+      }
+      
+      const slug = slugify(searchTitle);
+      const exactMatch = Object.keys(episodeData).find(key => slugify(key) === slug);
+      
+      if (exactMatch) {
+        console.log(`Titre trouvé par slug: "${exactMatch}"`);
+        return exactMatch;
+      }
+      
+      const partialMatch = Object.keys(episodeData).find(key => 
+        key.toLowerCase().includes(searchTitle.toLowerCase()) ||
+        searchTitle.toLowerCase().includes(key.toLowerCase())
+      );
+      
+      if (partialMatch) {
+        console.log(`Titre trouvé par correspondance partielle: "${partialMatch}"`);
+        return partialMatch;
+      }
+      
+      console.warn(`Aucun titre trouvé pour: "${searchTitle}"`);
+      console.log('Titres disponibles:', Object.keys(episodeData));
+      return null;
+    }
+
+    // === JIKAN API FUNCTIONS ===
+    
+    async function searchAnimeByTitle(title) {
+      const cacheKey = `search_${title}`;
+      const cached = getCachedData(cacheKey);
+      if (cached) return cached;
+
+      try {
+        console.log(`Recherche sur Jikan API: "${title}"`);
+        const response = await fetch(`${JIKAN_API_BASE}/anime?q=${encodeURIComponent(title)}&limit=5`);
+        
+        if (!response.ok) {
+          throw new Error(`Erreur API: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setCachedData(cacheKey, data);
+        
+        return data;
+      } catch (error) {
+        console.error('Erreur lors de la récupération de l\'anime:', error);
+        return null;
+      }
+    }
+
+    function getCachedData(key) {
+      const cached = API_CACHE.get(key);
+      if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+        return cached.data;
+      }
+      API_CACHE.delete(key);
+      return null;
+    }
+
+    function setCachedData(key, data) {
+      API_CACHE.set(key, {
+        data: data,
+        timestamp: Date.now()
+      });
+    }
+
+    function findBestMatch(searchResults, targetTitle) {
+      if (!searchResults?.data?.length) return null;
+
+      const normalizeTitle = (title) => {
+        return title.toLowerCase()
+          .replace(/[^\w\s]/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+      };
+
+      const normalizedTarget = normalizeTitle(targetTitle);
+      
+      // Recherche exacte
+      let bestMatch = searchResults.data.find(anime => 
+        normalizeTitle(anime.title) === normalizedTarget ||
+        (anime.title_english && normalizeTitle(anime.title_english) === normalizedTarget) ||
+        (anime.title_synonyms && anime.title_synonyms.some(syn => normalizeTitle(syn) === normalizedTarget))
+      );
+
+      // Si pas de match exact, prendre le premier résultat avec un bon score
+      if (!bestMatch) {
+        bestMatch = searchResults.data.find(anime => 
+          anime.score && anime.score > 6.0 && anime.members > 1000
+        );
+      }
+
+      // Sinon prendre le premier résultat
+      if (!bestMatch) {
+        bestMatch = searchResults.data[0];
+      }
+
+      return bestMatch;
+    }
+async function getAnimeById(id) {
+  const cacheKey = `anime_${id}`;
+  const cached = getCachedData(cacheKey);
+  if (cached) return cached;
+
+  try {
+    const response = await fetch(`${JIKAN_API_BASE}/anime/${id}/full`);
+    if (!response.ok) {
+      throw new Error(`Erreur API: ${response.status}`);
+    }
+    const data = await response.json();
+    setCachedData(cacheKey, data);
+    return data;
+  } catch (error) {
+    console.error(`Erreur lors de la récupération de l'anime ${id}:`, error);
+    return null;
+  }
+}
+
+    async function loadAnimeMetadata(title) {
+      try {
+        console.log(`Chargement des métadonnées pour: "${title}"`);
+        
+        // Rechercher l'anime
+        const searchResults = await searchAnimeByTitle(title);
+        if (!searchResults) {
+          console.warn('Aucun résultat de recherche');
+          return null;
+        }
+
+        // Trouver le meilleur match
+        const bestMatch = findBestMatch(searchResults, title);
+        if (!bestMatch) {
+          console.warn('Aucun match trouvé');
+          return null;
+        }
+
+        console.log(`Match trouvé: "${bestMatch.title}" (ID: ${bestMatch.mal_id})`);
+
+        // Récupérer les détails complets
+        const animeDetails = await getAnimeById(bestMatch.mal_id);
+        if (!animeDetails?.data) {
+          console.warn('Impossible de récupérer les détails');
+          return null;
+        }
+
+        console.log('Métadonnées chargées avec succès');
+        return animeDetails.data;
+      } catch (error) {
+        console.error('Erreur lors du chargement des métadonnées:', error);
+        return null;
+      }
+    }
+
+    function updateAnimeInfo(metadata) {
+      if (!metadata) {
+        hideAnimeInfo();
+        return;
+      }
+
+      // Update poster
+      const poster = document.getElementById('animePoster');
+      const posterLoading = document.getElementById('posterLoading');
+      
+      if (metadata.images?.jpg?.large_image_url) {
+        poster.src = metadata.images.jpg.large_image_url;
+        poster.onload = () => {
+          posterLoading.style.display = 'none';
+          poster.style.display = 'block';
+        };
+        poster.onerror = () => {
+          posterLoading.style.display = 'none';
+        };
+      } else {
+        posterLoading.style.display = 'none';
+      }
+
+      // Update rating
+      const ratingSection = document.getElementById('ratingSection');
+      const ratingScore = document.getElementById('ratingScore');
+      const starRating = document.getElementById('starRating');
+      
+      if (metadata.score) {
+        ratingScore.textContent = metadata.score.toFixed(1);
+        
+        // Generate stars (out of 5, converted from 10-point scale)
+        const stars = Math.round((metadata.score / 10) * 5);
+        starRating.innerHTML = '';
+        for (let i = 0; i < 5; i++) {
+          const star = document.createElement('span');
+          star.className = 'star';
+          star.textContent = i < stars ? '★' : '☆';
+          starRating.appendChild(star);
+        }
+        
+        ratingSection.style.display = 'flex';
+      } else {
+        ratingSection.style.display = 'none';
+      }
+
+      // Update stats
+      const animeStats = document.getElementById('animeStats');
+      const statusValue = document.getElementById('statusValue');
+      const episodesValue = document.getElementById('episodesValue');
+      const yearValue = document.getElementById('yearValue');
+      const studioValue = document.getElementById('studioValue');
+
+      statusValue.textContent = metadata.status || '-';
+      episodesValue.textContent = metadata.episodes || '-';
+      yearValue.textContent = metadata.year || (metadata.aired?.from ? new Date(metadata.aired.from).getFullYear() : '-');
+      studioValue.textContent = metadata.studios?.[0]?.name || '-';
+      
+      animeStats.style.display = 'grid';
+
+      // Update genres
+      const genresSection = document.getElementById('genresSection');
+      const genresList = document.getElementById('genresList');
+      
+      if (metadata.genres?.length) {
+        genresList.innerHTML = '';
+        metadata.genres.forEach(genre => {
+          const tag = document.createElement('span');
+          tag.className = 'genre-tag';
+          tag.textContent = genre.name;
+          genresList.appendChild(tag);
+        });
+        genresSection.style.display = 'block';
+      } else {
+        genresSection.style.display = 'none';
+      }
+
+      // Update synopsis
+      const animeSynopsis = document.getElementById('animeSynopsis');
+      const synopsisText = document.getElementById('synopsisText');
+      
+      if (metadata.synopsis) {
+        synopsisText.textContent = metadata.synopsis;
+        animeSynopsis.style.display = 'block';
+      } else {
+        animeSynopsis.style.display = 'none';
+      }
+    }
+
+    function hideAnimeInfo() {
+      document.getElementById('posterLoading').style.display = 'flex';
+      document.getElementById('animePoster').style.display = 'none';
+      document.getElementById('ratingSection').style.display = 'none';
+      document.getElementById('animeStats').style.display = 'none';
+      document.getElementById('genresSection').style.display = 'none';
+      document.getElementById('animeSynopsis').style.display = 'none';
+    }
+
+    // Load episode data
+    async function loadEpisodeData() {
+      try {
+        const response = await fetch('data/episodes.json');
+        episodeData = await response.json();
+        console.log('Données d\'épisodes chargées:', Object.keys(episodeData));
+      } catch (error) {
+        console.error('Erreur lors du chargement des épisodes:', error);
+        // Demo data si le fichier n'existe pas
+        episodeData = {
+          "Attack on Titan": {
+            "vf": ["https://example.com/aot-ep1-vf", "https://example.com/aot-ep2-vf"],
+            "vostfr": ["https://example.com/aot-ep1-vostfr", "https://example.com/aot-ep2-vostfr"]
+          },
+          "Demon Slayer": {
+            "vf": ["https://example.com/ds-ep1-vf", "https://example.com/ds-ep2-vf"],
+            "vostfr": ["https://example.com/ds-ep1-vostfr", "https://example.com/ds-ep2-vostfr"]
+          },
+          "One Piece": {
+            "vf": ["https://example.com/op-ep1-vf", "https://example.com/op-ep2-vf"],
+            "vostfr": ["https://example.com/op-ep1-vostfr", "https://example.com/op-ep2-vostfr"]
+          },
+          "Chainsaw Man": {
+            "vf": ["https://example.com/csm-ep1-vf", "https://example.com/csm-ep2-vf"],
+            "vostfr": ["https://example.com/csm-ep1-vostfr", "https://example.com/csm-ep2-vostfr"]
+          },
+          "Fullmetal Alchemist: Brotherhood": {
+            "vf": ["https://example.com/fmab-ep1-vf", "https://example.com/fmab-ep2-vf"],
+            "vostfr": ["https://example.com/fmab-ep1-vostfr", "https://example.com/fmab-ep2-vostfr"]
+          },
+          "Naruto": {
+            "vf": ["https://example.com/naruto-ep1-vf", "https://example.com/naruto-ep2-vf"],
+            "vostfr": ["https://example.com/naruto-ep1-vostfr", "https://example.com/naruto-ep2-vostfr"]
+          }
+        };
+        console.log('Données de démonstration utilisées');
+      }
+    }
+
+    // Initialize player
+    async function initializePlayer() {
+      console.log('Initialisation du player...');
+      
+      await loadEpisodeData();
+      
+      const params = getUrlParams();
+      
+      // Trouver le titre exact
+      const exactTitle = findExactTitle(params.title);
+      
+      if (!exactTitle) {
+        console.error('Anime non trouvé:', params.title);
+        showError(`Anime non trouvé: "${params.title}"`);
+        return;
+      }
+      
+      currentTitle = exactTitle;
+      currentLang = params.lang;
+      currentEpisode = params.episode;
+      
+      console.log('Player initialisé avec:', { currentTitle, currentLang, currentEpisode });
+      
+      // Vérifier que la langue existe
+      const availableLangs = Object.keys(episodeData[currentTitle]);
+      if (!availableLangs.includes(currentLang)) {
+        console.warn(`Langue ${currentLang} non disponible, utilisation de ${availableLangs[0]}`);
+        currentLang = availableLangs[0] || 'vf';
+      }
+      
+      updatePageTitle();
+      updateLanguageSelector();
+      updateEpisodeSelector();
+      updatePlayerSource();
+      updateNavButtons();
+      updateInfoPanel();
+      loadFromHistory();
+      
+      // Charger les métadonnées de l'anime
+      animeMetadata = await loadAnimeMetadata(currentTitle);
+      updateAnimeInfo(animeMetadata);
+    }
+
+    // Update page title
+    function updatePageTitle() {
+      const title = `${currentTitle} - Épisode ${currentEpisode + 1}`;
+      document.title = `NoxStream - ${title}`;
+      document.getElementById('animeTitle').textContent = currentTitle;
+      document.getElementById('episodeInfo').textContent = `Épisode ${currentEpisode + 1} - ${currentLang.toUpperCase()}`;
+    }
+
+    // Update language selector
+    function updateLanguageSelector() {
+      const selector = document.getElementById('languageSelector');
+      selector.innerHTML = '';
+      
+      const availableLangs = Object.keys(episodeData[currentTitle] || {});
+      
+      ['vf', 'vostfr'].forEach(lang => {
+        if (availableLangs.includes(lang)) {
+          const option = document.createElement('option');
+          option.value = lang;
+          option.textContent = lang.toUpperCase();
+          selector.appendChild(option);
+        }
+      });
+      
+      selector.value = currentLang;
+    }
+
+    // Update episode selector
+    function updateEpisodeSelector() {
+      const selector = document.getElementById('episodeSelector');
+      selector.innerHTML = '';
+      
+      const episodes = episodeData[currentTitle]?.[currentLang] || [];
+      
+      episodes.forEach((_, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `Épisode ${index + 1}`;
+        selector.appendChild(option);
+      });
+      
+      selector.value = currentEpisode;
+    }
+
+    // Update player source
+    function updatePlayerSource() {
+      const episodes = episodeData[currentTitle]?.[currentLang] || [];
+      const source = episodes[currentEpisode];
+      
+      console.log('Mise à jour de la source player:', { source, episodes: episodes.length });
+      
+      if (source) {
+        document.getElementById('animePlayer').src = source;
+        updatePageTitle();
+        saveToHistory();
+        updateUrl();
+      } else {
+        console.error('Épisode non disponible:', { currentTitle, currentLang, currentEpisode });
+        showError('Épisode non disponible');
+      }
+    }
+
+    // Update navigation buttons
+    function updateNavButtons() {
+      const episodes = episodeData[currentTitle]?.[currentLang] || [];
+      const prevBtn = document.getElementById('prev-episode');
+      const nextBtn = document.getElementById('next-episode');
+      
+      prevBtn.disabled = currentEpisode <= 0;
+      nextBtn.disabled = currentEpisode >= episodes.length - 1;
+    }
+
+    // Update info panel
+    function updateInfoPanel() {
+      const infoPanel = document.getElementById('infoPanel');
+      const episodes = episodeData[currentTitle]?.[currentLang] || [];
+      
+      const ratingInfo = animeMetadata?.score ? 
+        `<div class="info-item"><span>⭐</span><span>${animeMetadata.score.toFixed(1)}/10</span></div>` : '';
+      
+      const yearInfo = animeMetadata?.year ? 
+        `<div class="info-item"><span>📅</span><span>${animeMetadata.year}</span></div>` : '';
+      
+      infoPanel.innerHTML = `
+        <div class="info-item">
+          <span>📺</span>
+          <span>${currentTitle}</span>
+        </div>
+        <div class="info-item">
+          <span>🎬</span>
+          <span>Épisode ${currentEpisode + 1}/${episodes.length}</span>
+        </div>
+        <div class="info-item">
+          <span>🌍</span>
+          <span>${currentLang.toUpperCase()}</span>
+        </div>
+        ${ratingInfo}
+        ${yearInfo}
+        <div class="info-item">
+          <span>⏰</span>
+          <span>${new Date().toLocaleTimeString()}</span>
+        </div>
+      `;
+    }
+
+    // Change episode
+    function changeEpisode(direction) {
+      const episodes = episodeData[currentTitle]?.[currentLang] || [];
+      const newEpisode = currentEpisode + direction;
+      
+      if (newEpisode >= 0 && newEpisode < episodes.length) {
+        currentEpisode = newEpisode;
+        updatePlayerSource();
+        updateNavButtons();
+        updateInfoPanel();
+        document.getElementById('episodeSelector').value = currentEpisode;
+      }
+    }
+
+    // Save to history (using in-memory storage for demo)
+    const historyStorage = new Map();
+
+    function saveToHistory() {
+      const history = historyStorage.get('nox_history') || [];
+      const filtered = history.filter(entry => 
+        !(entry.title === currentTitle && entry.lang === currentLang)
+      );
+      
+      filtered.unshift({
+        title: currentTitle,
+        lang: currentLang,
+        episode: currentEpisode,
+        timestamp: new Date().toISOString()
+      });
+      
+      const trimmed = filtered.slice(0, 20);
+      historyStorage.set('nox_history', trimmed);
+    }
+
+    // Load from history
+    function loadFromHistory() {
+      const history = historyStorage.get('nox_history') || [];
+      const entry = history.find(e => e.title === currentTitle);
+      
+      if (entry && currentEpisode === 0) {
+        currentLang = entry.lang;
+        currentEpisode = entry.episode;
+        updateLanguageSelector();
+        updateEpisodeSelector();
+        updatePlayerSource();
+        updateNavButtons();
+        updateInfoPanel();
+      }
+    }
+
+    // Update URL without page refresh
+    function updateUrl() {
+      const newUrl = `player.html?title=${encodeURIComponent(currentTitle)}&lang=${currentLang}&episode=${currentEpisode}`;
+      window.history.replaceState({}, '', newUrl);
+    }
+
+    // Show error message
+    function showError(message) {
+      console.error('Erreur du player:', message);
+      const container = document.getElementById('playerContainer');
+      container.innerHTML = `
+        <div class="error-message">
+          <div class="error-icon">⚠️</div>
+          <div>${message}</div>
+          <div style="margin-top: 1rem;">
+            <a href="index.html" class="back-btn">Retour à l'accueil</a>
+          </div>
+          <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">
+            <div>Titres disponibles:</div>
+            <div>${Object.keys(episodeData).join(', ')}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOM chargé, initialisation du player...');
+      
+      initializePlayer();
+      
+      // Navigation buttons
+      document.getElementById('prev-episode').addEventListener('click', () => {
+        changeEpisode(-1);
+      });
+      
+      document.getElementById('next-episode').addEventListener('click', () => {
+        changeEpisode(1);
+      });
+      
+      // Language change
+      document.getElementById('languageSelector').addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        updateEpisodeSelector();
+        updatePlayerSource();
+        updateNavButtons();
+        updateInfoPanel();
+      });
+      
+      // Episode change
+      document.getElementById('episodeSelector').addEventListener('change', (e) => {
+        currentEpisode = parseInt(e.target.value);
+        updatePlayerSource();
+        updateNavButtons();
+        updateInfoPanel();
+      });
+      
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          changeEpisode(-1);
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          changeEpisode(1);
+        } else if (e.key === 'Escape') {
+          window.location.href = 'index.html';
+        }
+      });
+    });
+
+    console.log('🎬 NoxStream Player avec Jikan API chargé');
+    console.log('🎮 Controls: ← → arrows for episodes, ESC to go back');
+  </script>
+</body>
+</html>

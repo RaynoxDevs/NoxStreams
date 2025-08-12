@@ -1,890 +1,2816 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta property="og:title" content="NoxStream">
-  <meta name="description" content="Regardez gratuitement vos animes en streaming HD sur NoxStream. Des milliers d'épisodes et de films animés à découvrir, disponibles en VF et VOSTFR, avec une interface facile à utiliser." />
-  <meta property="og:image" content="https://media.discordapp.net/attachments/1153912402111369316/1391625703576830043/Sans_titre_35_20250707040602.png?ex=686d3cae&is=686beb2e&hm=d463449d4d179c0aba2a4ff187717e9c06c56e412f3313afd530900e6e95c2cf&=&format=webp&quality=lossless&width=930&height=930">
+  <meta name="description" content="Regardez gratuitement vos animes en streaming HD sur NoxStream. Des milliers d'épisodes et de films animés à découvrir, disponibles en VF et VOSTFR, avec une interface facile à utiliser">
+  <meta property="og:title" content="NoxStream - Streaming anime VF & VOSTFR">
+  <meta property="og:description" content="Regardez gratuitement vos animes en streaming HD sur NoxStream. Des milliers d'épisodes et de films animés à découvrir, disponibles en VF et VOSTFR, avec une interface facile à utiliser">
+  <meta property="og:image" content="https://i.ibb.co/23m5zJwt/logo-base.jpg">
+  <meta name="msvalidate.01" content="72CF7B4679154C8A420D838D7274F279" />
   <meta charset="UTF-8" />
   <meta property="og:url" content="https://noxstream.xyz" />
   <meta property="og:type" content="website" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NoxStream</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="icon" href="https://media.discordapp.net/attachments/1153912402111369316/1391625703576830043/Sans_titre_35_20250707040602.png?ex=686d3cae&is=686beb2e&hm=d463449d4d179c0aba2a4ff187717e9c06c56e412f3313afd530900e6e95c2cf&=&format=webp&quality=lossless&width=930&height=930" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://i.ibb.co/23m5zJwt/logo-base.jpg" type="image/png" />
   <style>
+    /* === FUTURISTIC COLOR PALETTE === */
     :root {
-      --bg: #111;
-      --text: #f5f5f5;
-      --accent: #555;
-      --card: #1a1a1a;
+      /* Core dark theme */
+      --bg-primary: #000a0f;
+      --bg-secondary: #001016;
+      --bg-tertiary: #001621;
+      --bg-card: #002028;
+      --bg-card-hover: #003040;
+      
+      /* Neon colors */
+      --neon-primary: #00d4ff;
+      --neon-secondary: #8b5cf6;
+      --neon-accent: #a855f7;
+      --neon-pink: #f472b6;
+      --neon-green: #10b981;
+      --neon-orange: #f59e0b;
+      
+      /* Text colors */
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e1;
+      --text-muted: #64748b;
+      --text-neon: #00d4ff;
+      
+      /* Glass morphism */
+      --glass-bg: rgba(0, 212, 255, 0.1);
+      --glass-border: rgba(0, 212, 255, 0.2);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      
+      /* Glows and shadows */
+      --glow-primary: 0 0 20px rgba(0, 212, 255, 0.5);
+      --glow-secondary: 0 0 30px rgba(139, 92, 246, 0.4);
+      --glow-strong: 0 0 40px rgba(0, 212, 255, 0.8);
+      --shadow-elevated: 0 25px 50px rgba(0, 0, 0, 0.6);
+      
+      /* Gradients */
+      --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 50%, #a855f7 100%);
+      --gradient-card: linear-gradient(145deg, rgba(0, 32, 40, 0.8) 0%, rgba(0, 48, 64, 0.6) 100%);
+      --gradient-border: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+      
+      /* Animation timings */
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-bouncy: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* === GLOBAL RESET & BASE === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
     }
 
+    /* === ANIMATED BACKGROUND === */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+      animation: backgroundPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes backgroundPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    /* === PARTICLE SYSTEM === */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--neon-primary);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+      box-shadow: 0 0 6px var(--neon-primary);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* === FUTURISTIC HEADER === */
     header {
-      background-color: #050505;
-      padding: 20px 40px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 10, 15, 0.95);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--accent);
+      z-index: 1000;
+      transition: all var(--transition-smooth);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     }
 
-    /* Logo */
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--gradient-border);
+      animation: borderGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+
     .logo {
-      width: 155px;
-      height: auto;
-      margin-right: 20px;
+      height: 45px;
+      width: auto;
+      filter: brightness(1.2) saturate(1.1);
+      transition: all var(--transition-smooth);
+      position: relative;
     }
 
-    /* Barre de recherche */
-    .search-bar input {
-      background-color: var(--card);
-      border: none;
-      border-radius: 5px;
-      padding: 10px 15px;
-      color: var(--text);
-      width: 250px;
-    }
-
-    main {
-      padding: 40px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-title {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
-      border-left: 4px solid var(--accent);
-      padding-left: 10px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      background-color: var(--card);
+    .logo::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      background: var(--gradient-primary);
       border-radius: 8px;
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
+      z-index: -1;
+      filter: blur(8px);
+    }
+
+    .logo:hover {
+      transform: scale(1.05) rotateY(5deg);
+      filter: brightness(1.4) saturate(1.3);
+    }
+
+    .logo:hover::after {
+      opacity: 0.3;
+    }
+
+    /* === NAVIGATION LINKS === */
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'Orbitron', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      transition: all var(--transition-smooth);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--glass-bg);
+      border: 1px solid transparent;
+      border-radius: 8px;
+      opacity: 0;
+      transition: all var(--transition-smooth);
+      z-index: -1;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: all var(--transition-smooth);
+      transform: translateX(-50%);
+      border-radius: 2px;
+      box-shadow: var(--glow-primary);
+    }
+
+    .nav-links a:hover {
+      color: var(--text-neon);
+      text-shadow: 0 0 10px var(--neon-primary);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a:hover::before {
+      opacity: 1;
+      border-color: var(--glass-border);
+      box-shadow: var(--glow-primary);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* === FUTURISTIC SEARCH BAR === */
+    .search-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar {
+      position: relative;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 25px;
+      overflow: hidden;
+      transition: all var(--transition-smooth);
+      backdrop-filter: blur(10px);
+    }
+
+    .search-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    .search-bar:focus-within {
+      border-color: var(--neon-primary);
+      box-shadow: var(--glow-primary);
+      transform: scale(1.02);
+    }
+
+    .search-bar:focus-within::before {
+      left: 100%;
+    }
+
+    .search-bar input {
+      background: transparent;
+      border: none;
+      padding: 15px 20px 15px 55px;
+      color: var(--text-primary);
+      width: 350px;
+      font-size: 15px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 500;
+      outline: none;
+      transition: all var(--transition-smooth);
+    }
+
+    .search-bar input::placeholder {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--neon-primary);
+      z-index: 1;
+      transition: all var(--transition-smooth);
+      filter: drop-shadow(0 0 5px var(--neon-primary));
+    }
+
+    .search-bar:focus-within .search-icon {
+      transform: translateY(-50%) scale(1.1);
+      color: var(--text-neon);
+    }
+
+    /* === MAIN CONTENT === */
+    main {
+      margin-top: 90px;
+      padding: 2rem;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 1s ease-out;
+    }
+/* Pour Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 8px; /* largeur de la barre verticale */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* fond de la zone */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0a78a7; /* couleur de la barre */
+  border-radius: 10px; /* arrondi */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #13a5e0; /* couleur au survol */
+}
+
+/* Pour Firefox */
+* {
+  scrollbar-width: thin; /* barre fine */
+  scrollbar-color: #0a78a7 transparent; /* couleur / fond */
+}
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === FEATURED SECTION REDESIGN === */
+    .featured-section {
+      position: relative;
+      height: 600px;
+      border-radius: 25px;
+      margin-bottom: 4rem;
+      overflow: hidden;
+      background: var(--gradient-card);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-elevated);
+      animation: slideInFromLeft 1.2s ease-out;
+    }
+
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px) rotateY(-10deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0) rotateY(0);
+      }
+    }
+
+    .featured-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-border);
+      opacity: 0.3;
+      animation: pulse 4s ease-in-out infinite;
+      border-radius: 25px;
+      z-index: -1;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.02); opacity: 0.6; }
+    }
+
+    /* === FEATURED CONTROLS === */
+    .featured-controls {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      gap: 1rem;
+      z-index: 10;
+    }
+
+    .featured-control-btn {
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-secondary);
+      padding: 0.8rem 1.2rem;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-control-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .featured-control-btn:hover {
+      color: var(--text-primary);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: var(--glow-primary);
+      border-color: var(--neon-primary);
+    }
+
+    .featured-control-btn:hover::before {
+      left: 100%;
+    }
+
+    .featured-control-btn.not-interested {
+      border-color: rgba(244, 114, 182, 0.3);
+    }
+
+    .featured-control-btn.not-interested:hover {
+      border-color: var(--neon-pink);
+      box-shadow: 0 0 20px rgba(244, 114, 182, 0.4);
+      color: var(--neon-pink);
+    }
+
+    .featured-control-btn.skip {
+      border-color: rgba(168, 85, 247, 0.3);
+    }
+
+    .featured-control-btn.skip:hover {
+      border-color: var(--neon-accent);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+      color: var(--neon-accent);
+    }
+
+    /* === TIMER AND PROGRESS === */
+    .rotation-timer {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-secondary);
+      padding: 0.6rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-family: 'Orbitron', monospace;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .timer-bar {
+      width: 40px;
+      height: 4px;
+      background: rgba(0, 212, 255, 0.2);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .timer-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      width: 0%;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px var(--neon-primary);
+    }
+
+    .featured-progress {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.8rem;
+      z-index: 10;
+    }
+
+    .progress-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      position: relative;
+      border: 2px solid transparent;
+    }
+
+    .progress-dot::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
+      z-index: -1;
+    }
+
+    .progress-dot.active {
+      background: var(--neon-primary);
+      box-shadow: var(--glow-primary);
+      transform: scale(1.2);
+    }
+
+    .progress-dot.active::before {
+      opacity: 0.5;
+    }
+
+    .progress-dot:hover {
+      background: var(--text-primary);
+      transform: scale(1.3);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    }
+
+    /* === FEATURED BACKGROUND & CONTENT === */
+    .featured-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: blur(3px) brightness(0.3) saturate(1.2);
+      transform: scale(1.1);
+      transition: all 1s ease;
+    }
+
+    .featured-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg, 
+        rgba(0, 10, 15, 0.9) 0%, 
+        rgba(0, 16, 22, 0.7) 30%,
+        rgba(0, 32, 40, 0.8) 70%,
+        rgba(0, 10, 15, 0.9) 100%
+      );
+      backdrop-filter: blur(1px);
+    }
+
+    .featured-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding: 3rem;
+      gap: 3rem;
+      transition: all 0.4s ease;
+    }
+
+    .featured-poster {
+      flex-shrink: 0;
+      width: 220px;
+      height: 320px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: var(--shadow-elevated);
+      border: 2px solid var(--glass-border);
+      position: relative;
+      transition: all var(--transition-smooth);
+    }
+
+    .featured-poster::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
+      z-index: 1;
+      border-radius: 13px;
+    }
+
+    .featured-poster:hover {
+      transform: rotateY(5deg) rotateX(2deg) scale(1.02);
+      box-shadow: var(--glow-strong);
+    }
+
+    .featured-poster:hover::before {
+      opacity: 0.1;
+    }
+
+    .featured-poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-smooth);
+      position: relative;
+      z-index: 0;
+    }
+
+    .featured-poster:hover img {
+      transform: scale(1.05);
+    }
+
+    .featured-info {
+      flex: 1;
+      max-width: 700px;
+    }
+
+    .featured-badge {
+      display: inline-block;
+      background: var(--gradient-primary);
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--glow-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-badge::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .featured-title {
+      font-size: 3.2rem;
+      font-weight: 900;
+      font-family: 'Orbitron', monospace;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+      animation: titleGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes titleGlow {
+      0%, 100% { text-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+      50% { text-shadow: 0 0 30px rgba(0, 212, 255, 0.6), 0 0 40px rgba(139, 92, 246, 0.3); }
+    }
+
+    .featured-description {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    .featured-meta {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      margin-bottom: 2.5rem;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .featured-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.9rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(0, 212, 255, 0.1);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      transition: all var(--transition-smooth);
+    }
+
+    .featured-meta span:hover {
+      background: rgba(0, 212, 255, 0.2);
+      border-color: var(--neon-primary);
+      color: var(--text-neon);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .featured-btn {
+      padding: 1rem 2.5rem;
+      border-radius: 15px;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all var(--transition-bouncy);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s;
+    }
+
+    .featured-btn:hover::before {
+      left: 100%;
+    }
+
+    .featured-btn.primary {
+      background: var(--gradient-primary);
+      color: white;
+      box-shadow: var(--glow-primary);
+      border: 2px solid transparent;
+    }
+
+    .featured-btn.primary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: var(--glow-strong);
+    }
+
+    .featured-btn.secondary {
+      background: var(--glass-bg);
+      color: var(--text-primary);
+      border: 2px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .featured-btn.secondary:hover {
+      background: rgba(0, 212, 255, 0.1);
+      border-color: var(--neon-primary);
+      color: var(--text-neon);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: var(--glow-primary);
+    }
+
+    /* === CATEGORY SECTIONS === */
+    .category-row {
+      margin-bottom: 5rem;
+      animation: slideInFromRight 1s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .category-row:nth-child(even) {
+      animation-name: slideInFromLeft;
+    }
+
+    @keyframes slideInFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 2.2rem;
+      font-weight: 800;
+      font-family: 'Orbitron', monospace;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    .category-header::after {
+      content: '';
+      flex: 1;
+      height: 2px;
+      background: var(--gradient-border);
+      margin-left: 2rem;
+      border-radius: 2px;
+      animation: lineGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes lineGlow {
+      0%, 100% { opacity: 0.5; box-shadow: none; }
+      50% { opacity: 1; box-shadow: 0 0 10px var(--neon-primary); }
+    }
+
+    .category-emoji {
+      font-size: 2.8rem;
+      filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+      animation: emojiFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes emojiFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-5px) rotate(5deg); }
+    }
+
+    /* === CAROUSEL NAVIGATION === */
+    .carousel-nav-wrapper {
+      position: relative;
+      padding: 0 80px;
+    }
+
+    .scroll-wrapper {
+      display: flex;
+      gap: 2rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 1.5rem 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .scroll-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* === FUTURISTIC CARDS === */
+    .scroll-card {
+      flex: 0 0 auto;
+      width: 220px;
+      background: var(--gradient-card);
+      border-radius: 20px;
       overflow: hidden;
       cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      transition: all var(--transition-smooth);
+      border: 1px solid var(--glass-border);
+      position: relative;
+      backdrop-filter: blur(10px);
+      animation: cardFloat 6s ease-in-out infinite;
     }
 
-    .card:hover {
-      transform: scale(1.03);
+    .scroll-card:nth-child(even) {
+      animation-delay: -3s;
     }
 
-    .card img {
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-3px); }
+    }
+
+    .scroll-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: all var(--transition-smooth);
+      border-radius: 20px;
+      z-index: 1;
+    }
+
+    .scroll-card::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: var(--gradient-primary);
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
+      border-radius: 22px;
+      z-index: -1;
+      filter: blur(8px);
+    }
+
+    .scroll-card:hover {
+      transform: translateY(-10px) scale(1.03) rotateY(5deg);
+      box-shadow: var(--shadow-elevated);
+      border-color: var(--neon-primary);
+    }
+
+    .scroll-card:hover::before {
+      opacity: 0.1;
+    }
+
+    .scroll-card:hover::after {
+      opacity: 0.4;
+    }
+
+    .scroll-card img {
       width: 100%;
-      height: 220px;
+      height: 300px;
       object-fit: cover;
+      transition: all var(--transition-smooth);
+      position: relative;
+      z-index: 2;
     }
 
-    .card-title {
-      padding: 10px;
-      font-size: 0.95rem;
+    .scroll-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .scroll-card .meta {
+      padding: 1.5rem;
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 16, 22, 0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .scroll-card .title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      margin-bottom: 0.8rem;
+      color: var(--text-primary);
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+    }
+
+    .scroll-card .type {
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'Orbitron', monospace;
+      padding: 0.4rem 1rem;
+      border-radius: 25px;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-card .type::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: typeShimmer 3s infinite;
+    }
+
+    @keyframes typeShimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .scroll-card .type.anime {
+      background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+      color: white;
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+    }
+
+    .scroll-card .type.serie {
+      background: linear-gradient(135deg, #f472b6, #a855f7);
+      color: white;
+      box-shadow: 0 0 15px rgba(244, 114, 182, 0.3);
+    }
+
+    /* === NAVIGATION ARROWS === */
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      color: var(--text-primary);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      transition: all var(--transition-bouncy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .nav-button::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
+      z-index: -1;
+      filter: blur(8px);
+    }
+
+    .nav-button:hover {
+      background: rgba(0, 212, 255, 0.2);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: var(--glow-primary);
+      border-color: var(--neon-primary);
+      color: var(--text-neon);
+    }
+
+    .nav-button:hover::before {
+      opacity: 0.6;
+    }
+
+    .nav-button.left {
+      left: 15px;
+    }
+
+    .nav-button.right {
+      right: 15px;
+    }
+  
+
+    /* === HISTORY SECTION === */
+    #historyBlock {
+      margin-top: 5rem;
+      padding: 3rem;
+      background: var(--gradient-card);
+      border-radius: 25px;
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-elevated);
+      backdrop-filter: blur(15px);
+      animation: slideInFromBottom 1s ease-out;
+    }
+
+    @keyframes slideInFromBottom {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #historyBlock h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      font-family: 'Orbitron', monospace;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+    }
+
+    #historyList {
+      list-style: none;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    #historyList li {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all var(--transition-smooth);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #historyList li::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+      transition: left 0.6s;
+    }
+
+    #historyList li:hover {
+      background: var(--bg-card-hover);
+      transform: translateX(8px) scale(1.02);
+      border-color: var(--neon-primary);
+      box-shadow: var(--glow-primary);
+    }
+
+    #historyList li:hover::before {
+      left: 100%;
+    }
+
+    #historyList img {
+      width: 70px;
+      height: 95px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid var(--glass-border);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform var(--transition-smooth);
+    }
+
+    #historyList li:hover img {
+      transform: scale(1.05) rotateY(5deg);
+    }
+
+    /* === FOOTER REDESIGN === */
+    footer {
+      background: var(--bg-secondary);
+      padding: 4rem 2rem 2rem;
+      margin-top: 6rem;
+      border-top: 1px solid var(--glass-border);
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--gradient-border);
+      animation: footerGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes footerGlow {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-section h3 {
+      color: var(--text-primary);
+      font-size: 1.4rem;
+      font-weight: 700;
+      font-family: 'Orbitron', monospace;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+    }
+
+    .footer-section p {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding-top: 3rem;
+      margin-top: 3rem;
+      border-top: 1px solid var(--glass-border);
+      font-family: 'Orbitron', monospace;
+      font-weight: 600;
+    }
+
+    .footer-logo {
+      height: 40px;
+      filter: brightness(1.2);
+      transition: transform var(--transition-smooth);
+    }
+
+    .footer-logo:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    /* === NO RESULTS MESSAGE === */
+    #no-results {
       text-align: center;
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      font-family: 'Orbitron', monospace;
+      padding: 4rem 2rem;
+      background: var(--gradient-card);
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      margin-top: 2rem;
+      backdrop-filter: blur(15px);
+      animation: slideInFromBottom 0.5s ease-out;
     }
 
-    @media (max-width: 600px) {
-      header {
+    /* === LOADING ANIMATION === */
+    .loading {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      border: 3px solid rgba(0, 212, 255, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--neon-primary);
+      animation: loadingSpin 1s ease-in-out infinite;
+      box-shadow: 0 0 10px var(--neon-primary);
+    }
+
+    @keyframes loadingSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* === RESPONSIVE DESIGN === */
+    @media (max-width: 1024px) {
+      .search-bar input {
+        width: 280px;
+      }
+      
+      .featured-content {
+        gap: 2rem;
+        padding: 2rem;
+      }
+      
+      .featured-poster {
+        width: 180px;
+        height: 260px;
+      }
+      
+      .featured-title {
+        font-size: 2.5rem;
+      }
+      
+      .carousel-nav-wrapper {
+        padding: 0 60px;
+      }
+      
+      .scroll-card {
+        width: 180px;
+      }
+    }
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  
+  .search-bar input {
+    width: 250px;
+    padding: 12px 16px 12px 45px;
+  }
+  .featured-section {
+    height: 250px !important;
+    overflow: hidden;
+    position: relative;
+    padding: 0.5rem 0.7rem;
+  }
+
+  .featured-content {
+    display: grid;
+    grid-template-columns: 60px auto;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "poster badge"
+      "poster main"
+      "meta actions";
+    height: 100%;
+    gap: 0.4rem 0.6rem;
+  }
+
+  .featured-poster {
+    grid-area: poster;
+    width: 80px;
+    height: 120px;
+    top: -15%;
+    left: -40%;
+    position:absolute;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .featured-badge {
+    grid-area: badge;
+    align-self: start;
+    font-size: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    transform: scale(0.85);
+    transform-origin: left top;
+    max-width: fit-content;
+  }
+
+  .featured-title {
+    font-size: 0.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 0.2rem;
+    top:1%;
+    position: absolute
+  }
+
+  .featured-description {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    color: var(--text-secondary);
+    max-height: 3.8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.2rem;
+  }
+
+  .featured-info {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 0.2rem;
+    overflow: hidden;
+  }
+
+  .featured-meta {
+    grid-area: meta;
+    font-size: 0.4rem;
+    display: flex;
+    gap: 0.2rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    transform: scale(0.5);       /* Réduit tout de 20% */
+  position:absolute;
+  left:-80%;
+  
+  }
+
+  .featured-meta span {
+    padding: 0.15rem 0.3rem;
+    border-radius: 5px;
+    background: rgba(0, 212, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    white-space: nowrap;
+  }
+
+  .featured-actions {
+    grid-area: actions;
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    position:absolute;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .featured-btn {
+    font-size: 0.5rem;
+    padding: 0.25rem 0.4rem;
+    border-radius: 5px;
+    white-space: nowrap;
+    max-width: 80px;
+  }
+
+  /* === Contrôles overlay === */
+  .featured-controls {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    transform: scale(0.7);
+    transform-origin: top right;
+    z-index: 10;
+  }
+
+  .featured-control-btn {
+    font-size: 0.45rem;
+    padding: 0.3rem 0.4rem;
+    border-radius: 6px;
+    width: 65px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* === Timer === */
+  .rotation-timer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 0.5rem;
+    padding: 0.3rem 0.4rem;
+    transform: scale(0.5);
+    transform-origin: top left;
+    z-index: 10;
+  }
+
+  /* === Points de progression === */
+  .featured-progress {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.5);
+    transform-origin: center;
+    z-index: 10;
+  }
+}
+
+
+  /* Carousel Navigation */
+  .carousel-nav-wrapper {
+    padding: 0 50px;
+  }
+  
+  .nav-button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+  
+  .scroll-card {
+    width: 160px;
+  }
+  
+  .scroll-card img {
+    height: 240px;
+  }
+
+  /* Category Headers */
+  .category-header {
+    font-size: 1.8rem;
+    top: 0px;
+    position: relative;
+  }
+  
+  .category-emoji {
+    font-size: 2.2rem;
+    
+  }
+
+  /* Modal */
+  .modal-content {
+    width: 98%;
+    height: 95%;
+    
+  }
+  
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .episode-nav {
+    justify-content: center;
+  }
+
+  /* Layout */
+  main {
+    padding: 1.5rem;
+  }
+  
+  #historyBlock {
+    padding: 2rem 1.5rem;
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+    @media (max-width: 480px) {
+      .search-bar input {
+        width: 200px;
+      }
+
+      .featured-title {
+        font-size: 1.8rem;
+      }
+
+      .featured-meta {
         flex-direction: column;
-        gap: 15px;
+        gap: 0.5rem;
+      }
+
+      .category-header {
+        font-size: 1.5rem;
+        flex-direction: column;
         text-align: center;
       }
 
-      .search-bar input {
-        width: 100%;
+      .category-header::after {
+        display: none;
+      }
+
+      .scroll-card {
+        width: 140px;
+      }
+
+      .scroll-card img {
+        height: 200px;
+      }
+
+      .carousel-nav-wrapper {
+        padding: 0 40px;
+      }
+
+      .nav-button {
+        width: 45px;
+        height: 45px;
       }
     }
-    #episodeModal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
 
-.modal-overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  top: 0;
-  left: 0;
-}
+    /* === TRANSITION ANIMATIONS === */
+    .featured-section.transitioning {
+      pointer-events: none;
+    }
 
-.modal-content {
-  position: relative;
-  width: 90%;
-  max-width: 1000px;
-  height: 85%;
-  background-color: #111;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  z-index: 10000;
-  border: 1px solid #333;
-}
+    .featured-content.fade-out {
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      transition: all 0.4s ease;
+    }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background: #1a1a1a;
-  border-bottom: 1px solid #333;
-}
+    .featured-content.fade-in {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      transition: all 0.4s ease;
+    }
 
-.modal-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #f5f5f5;
-}
+    /* === SCROLL ANIMATIONS === */
+    @media (prefers-reduced-motion: no-preference) {
+      .category-row {
+        animation-delay: calc(var(--scroll-delay, 0) * 0.1s);
+      }
+    }
 
-.close-btn {
-  background: none;
-  border: none;
-  color: #ccc;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+    /* === ACCESSIBILITY === */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
 
-.close-btn:hover {
-  color: #999;
-}
-
-.player-container {
-  flex: 1;
-  background: #000;
-}
-
-.controls {
-  display: flex;
-  gap: 15px;
-  padding: 15px;
-  background: #1a1a1a;
-  border-top: 1px solid #333;
-  justify-content: flex-start;
-}
-
-.controls select {
-  background-color: #222;
-  color: #f5f5f5;
-  border: 1px solid #444;
-  padding: 8px 12px;
-  border-radius: 5px;
-}
-
+    /* === HIGH CONTRAST MODE === */
+    @media (prefers-contrast: high) {
+      :root {
+        --neon-primary: #00ffff;
+        --neon-secondary: #ff00ff;
+        --text-primary: #ffffff;
+        --text-secondary: #ffffff;
+        --bg-primary: #000000;
+        --bg-secondary: #000000;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <!-- Logo cliquable -->
-    <a href="index.html">
-      <img src="https://media.discordapp.net/attachments/1153912402111369316/1391822701852754061/IMG_7556.png?ex=686d4b66&is=686bf9e6&hm=5e13f06a5557f663f6d95c2e9d29fd91c43cc089a4bdafb0d6d8b0b1c68d95a7&=&format=webp&quality=lossless&width=1463&height=454" alt="Logo NoxStream" class="logo" />
-    </a>
+  <!-- Particle System -->
+  <div class="particles" id="particles"></div>
 
-    <!-- Barre de recherche -->
-    <div class="search-bar">
-      <input type="text" placeholder="Rechercher un anime..." />
+  <header>
+    <div class="header-left">
+      <a href="index.html">
+        <img src="https://i.ibb.co/GftxCw5p/name-band-base.jpg" alt="Logo NoxStream" class="logo" />
+      </a>
+      <nav class="nav-links">
+        <a href="#action">Action</a>
+        <a href="#psychological">Psychologique</a>
+        <a href="#scifi">Sci-Fi</a>
+        <a href="#history">Historique</a>
+      </nav>
+    </div>
+
+    <div class="search-container">
+      <div class="search-bar">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+        <input type="text" placeholder="Rechercher un anime..." />
+      </div>
     </div>
   </header>
 
   <main>
-    <div class="section-title">Derniers Ajouts</div>
-    <div class="grid">
-      <!-- Exemple de carte -->
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/224210.jpg" alt="Anime 1">
-        <div class="card-title">One Piece</div>
+    <!-- Featured Anime Section avec rotation -->
+    <section class="featured-section" id="featuredSection">
+      <!-- Contrôles -->
+      <div class="featured-controls">
+        <button class="featured-control-btn not-interested" onclick="notInterested()" title="Pas intéressé par cet anime">
+          👎 Pas intéressé
+        </button>
+        <button class="featured-control-btn skip" onclick="skipToNext()" title="Anime suivant">
+          ⏭️ Suivant
+        </button>
       </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/133461.jpg" alt="Anime 2">
-        <div class="card-title">Neon Genesis Evangelion</div>
+      
+      <!-- Timer de rotation -->
+      <div class="rotation-timer">
+        <span>🔄</span>
+        <div class="timer-bar">
+          <div class="timer-fill" id="timerFill"></div>
+        </div>
       </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/221666.jpg" alt="Anime 3">
-        <div class="card-title">Serial Experiments Lain</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/275609.jpg" alt="Anime 4">
-        <div class="card-title">Chainsaw Man</div>
-      </div>
-    <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/221067.jpg" alt="Anime 5">
-        <div class="card-title">Attack on Titan</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/221537.jpg" alt="Anime 6">
-        <div class="card-title">Fullmetal Alchemist: Brotherhood</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/221544.jpg" alt="Anime 7">
-        <div class="card-title">Death Note</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/257562.jpg" alt="Anime 8">
-        <div class="card-title">My Hero Academia</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/221064.jpg" alt="Anime 9">
-        <div class="card-title">Steins;Gate</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/231406.jpg" alt="Anime 10">
-        <div class="card-title">Demon Slayer</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/276807.jpg" alt="Anime 11">
-        <div class="card-title">Hunter x Hunter</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/156337.jpg" alt="Anime 12">
-        <div class="card-title">Tokyo Ghoul</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/257693.jpg" alt="Anime 13">
-        <div class="card-title">Mob Psycho 100</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/257932.jpg" alt="Anime 14">
-        <div class="card-title">Naruto</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/221595.jpg" alt="Anime 15">
-        <div class="card-title">Cowboy Bebop</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/221058.jpg" alt="Anime 16">
-        <div class="card-title">Made in Abyss</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/233031.jpg" alt="Anime 17">
-        <div class="card-title">Vinland Saga</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/221244.jpg" alt="Anime 18">
-        <div class="card-title">Erased</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/225802.jpg" alt="Anime 19">
-        <div class="card-title">Parasyte: The Maxim</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/224478.jpg" alt="Anime 20">
-        <div class="card-title">Black Clover</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/252222.jpg" alt="Anime 21">
-        <div class="card-title">Jujutsu Kaisen</div>
-      </div>
-      <div class="card">
-        <img src="https://cdn-eu.anidb.net/images/main/227312.jpg" alt="Anime 22">
-        <div class="card-title">The Promised Neverland</div>
+      
+      <!-- Indicateurs de progression -->
+      <div class="featured-progress" id="featuredProgress">
+        <!-- Généré dynamiquement -->
       </div>
 
-      <!-- Duplique ces blocs pour plus d’animes -->
+      <div class="featured-background" id="featuredBackground"></div>
+      <div class="featured-overlay"></div>
+      <div class="featured-content" id="featuredContent">
+        <!-- Contenu généré dynamiquement -->
+      </div>
+    </section>
+
+    <!-- Action Category -->
+    <section class="category-row" id="action" style="--scroll-delay: 1">
+      <div class="category-header">
+        <span class="category-emoji">🔥</span>
+        <span>Action</span>
+      </div>
+      <div class="carousel-nav-wrapper">
+        <button class="nav-button left">‹</button>
+        
+        <div class="scroll-wrapper">
+          <div class="scroll-card" data-title="Dexter">
+            <img src="https://artworks.thetvdb.com/banners/posters/79349-27.jpg" alt="Dexter">
+            <div class="meta">
+              <div class="title">Dexter</div>
+              <div class="type serie">Serie</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Chainsaw Man">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx127230-DdP4vAdssLoz.png" alt="Chainsaw Man">
+            <div class="meta">
+              <div class="title">Chainsaw Man</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Demon Slayer">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101922-WBsBl0ClmgYL.jpg" alt="Demon Slayer">
+            <div class="meta">
+              <div class="title">Demon Slayer</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Attack on Titan">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx16498-buvcRTBx4NSm.jpg" alt="Attack on Titan">
+            <div class="meta">
+              <div class="title">Attack on Titan</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Fullmetal Alchemist: Brotherhood">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx5114-nSWCgQlmOMtj.jpg" alt="Fullmetal Alchemist">
+            <div class="meta">
+              <div class="title">Fullmetal Alchemist: Brotherhood</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Naruto">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx20-dE6UHbFFg1A5.jpg" alt="Naruto">
+            <div class="meta">
+              <div class="title">Naruto</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="One Piece">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21-ELSYx3yMPcKM.jpg" alt="One Piece">
+            <div class="meta">
+              <div class="title">One Piece</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="My Hero Academia">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21459-nYh85uj2Fuwr.jpg" alt="My Hero Academia">
+            <div class="meta">
+              <div class="title">My Hero Academia</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Hunter x Hunter">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx11061-y5gsT1hoHuHw.png" alt="Hunter x Hunter">
+            <div class="meta">
+              <div class="title">Hunter x Hunter</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Mob Psycho 100">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21507-6YUSbh2m0N1p.jpg" alt="Mob Psycho 100">
+            <div class="meta">
+              <div class="title">Mob Psycho 100</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Jujutsu Kaisen">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx113415-LHBAeoZDIsnF.jpg" alt="Jujutsu Kaisen">
+            <div class="meta">
+              <div class="title">Jujutsu Kaisen</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Black Clover">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx97940-fyh8o7gNbha0.png" alt="Black Clover">
+            <div class="meta">
+              <div class="title">Black Clover</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+        </div>
+        
+        <button class="nav-button right">›</button>
+      </div>
+    </section>
+
+    <!-- Psychological Category -->
+    <section class="category-row" id="psychological" style="--scroll-delay: 2">
+      <div class="category-header">
+        <span class="category-emoji">🧠</span>
+        <span>Psychologique</span>
+      </div>
+      <div class="carousel-nav-wrapper">
+        <button class="nav-button left">‹</button>
+
+        <div class="scroll-wrapper">
+          <div class="scroll-card" data-title="Serial Experiments Lain">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx339-xF2wp1NQuQ4r.png" alt="Serial Experiments Lain">
+            <div class="meta">
+              <div class="title">Serial Experiments Lain</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Death Note">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx1535-kUgkcrfOrkUM.jpg" alt="Death Note">
+            <div class="meta">
+              <div class="title">Death Note</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Tokyo Ghoul">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/b20605-k665mVkSug8D.jpg" alt="Tokyo Ghoul">
+            <div class="meta">
+              <div class="title">Tokyo Ghoul</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Erased">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21234-XmqW39aQ9o7O.jpg" alt="Erased">
+            <div class="meta">
+              <div class="title">Erased</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+
+          <div class="scroll-card" data-title="The Promised Neverland">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101759-8UR7r9MNVpz2.jpg" alt="The Promised Neverland">
+            <div class="meta">
+              <div class="title">The Promised Neverland</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+
+          <div class="scroll-card" data-title="Parasyte: The Maxim">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx20623-dUARfggnNDOe.jpg" alt="Parasyte: The Maxim">
+            <div class="meta">
+              <div class="title">Parasyte: The Maxim</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="nav-button right">›</button>
+      </div>
+    </section>
+
+    <!-- Science Fiction Category -->
+    <section class="category-row" id="scifi" style="--scroll-delay: 3">
+      <div class="category-header">
+        <span class="category-emoji">🧪</span>
+        <span>Science-Fiction</span>
+      </div>
+      <div class="carousel-nav-wrapper">
+        <button class="nav-button left">‹</button>
+
+        <div class="scroll-wrapper">
+          <div class="scroll-card" data-title="Steins;Gate">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx9253-tIUXF2gfU8Sg.jpg" alt="Steins;Gate">
+            <div class="meta">
+              <div class="title">Steins;Gate</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Neon Genesis Evangelion">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx30-AI1zr74Dh4ye.jpg" alt="Neon Genesis Evangelion">
+            <div class="meta">
+              <div class="title">Neon Genesis Evangelion</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Cowboy Bebop">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx1-GCsPm7waJ4kS.png" alt="Cowboy Bebop">
+            <div class="meta">
+              <div class="title">Cowboy Bebop</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Made in Abyss">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx97986-TQ7dCgbS3y5s.jpg" alt="Made in Abyss">
+            <div class="meta">
+              <div class="title">Made in Abyss</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+          
+          <div class="scroll-card" data-title="Vinland Saga">
+            <img src="https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101348-2fhDFPCuMNiz.jpg" alt="Vinland Saga">
+            <div class="meta">
+              <div class="title">Vinland Saga</div>
+              <div class="type anime">Anime</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="nav-button right">›</button>
+      </div>
+    </section>
+
+    <!-- History Section -->
+    <div id="historyBlock">
+      <h2 id="history">📚 Historique récent</h2>
+      <ul id="historyList"></ul>
     </div>
   </main>
-  <div id="episodeModal" style="display: none;">
-  <div class="modal-overlay" onclick="closeEpisodeModal()"></div>
-  <div class="modal-content">
-    <div class="modal-header">
-      <div class="modal-title" id="modalAnimeTitle">Titre de l'anime</div>
-      <button class="close-btn" onclick="closeEpisodeModal()">✕</button>
-    </div>
-    <div class="player-container">
-      <iframe id="animePlayer" width="100%" height="100%" src="" frameborder="0" scrolling="no" allowfullscreen></iframe>
-    </div>
-    <div class="controls">
-      <select id="languageSelector" onchange="updatePlayerSource()">
-        <option value="vf">VF</option>
-        <option value="vostfr">VOSTFR</option>
-      </select>
-      <select id="episodeSelector" onchange="updatePlayerSource()">
-        <!-- Épisodes dynamiques -->
-      </select>
-    </div>
-  </div>
-</div>
-<div id="historyBlock" style="margin-top: 40px; padding: 10px; border-top: 1px solid #ccc;">
-  <h2>Historique récent</h2>
-  <ul id="historyList" style="list-style: none; padding-left: 0;"></ul>
-</div>
 
-<!-- FOOTER -->
-<footer style="background-color:#111; color:#eee; padding:20px 40px; font-family: Arial, sans-serif; font-size:14px; margin-top:40px;">
-  <div style="max-width:900px; margin:0 auto;">
-    <div style="display:flex; flex-wrap:wrap; gap:40px; justify-content: space-between;">
 
-      <div style="flex:1; min-width:200px;">
-        <h3 style="color:#A0A0A0; margin-bottom:10px;">Qui sommes-nous</h3>
-        <p>NoxStream est un service de streaming gratuit dédié aux amateurs d'animation, proposant un accès facile à vos séries préférées.</p>
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Qui sommes-nous</h3>
+        <p>NoxStream est un service de streaming gratuit dédié aux amateurs d'animation, proposant un accès facile à vos séries préférées avec une interface moderne et intuitive.</p>
       </div>
 
-      <div style="flex:1; min-width:200px;">
-        <h3 style="color:#A0A0A0; margin-bottom:10px;">DMCA</h3>
-        <p>NoxStream n'héberge aucun contenu sur ses serveurs. Pour toute réclamation, merci de contacter directement les hébergeurs des fichiers.</p>
+      <div class="footer-section">
+        <h3>DMCA</h3>
+        <p>NoxStream n'héberge aucun contenu sur ses serveurs. Pour toute réclamation, merci de contacter directement les hébergeurs des fichiers concernés.</p>
       </div>
 
-      <div style="flex:1; min-width:200px;">
-        <h3 style="color:#A0A0A0; margin-bottom:10px;">Contact</h3>
-        <p>Vous pouvez nous joindre à contact.noxstream@gmail.com ou via notre formulaire en ligne.</p>
+      <div class="footer-section">
+        <h3>Contact</h3>
+        <p>Vous pouvez nous joindre à contact@noxstream.xyz ou via notre formulaire en ligne pour toute question ou suggestion.</p>
       </div>
-
     </div>
 
-    <hr style="border-color:#444; margin:30px 0;">
-
-    <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
-      <img src="https://media.discordapp.net/attachments/1153912402111369316/1392181684841087118/Sans_titre_37_20250708183254.png?ex=686e99bb&is=686d483b&hm=aca6c1d36e02ca02350d1c5a19be97feed3c4ad214d8fb29a537ff565d2ea8c3&=&format=webp&quality=lossless&width=1463&height=454" alt="NoxStream Logo" style="height:35px;">
+    <div class="footer-bottom">
+      <img src="https://i.ibb.co/b5KNBsJ5/name-band-gray.jpg" alt="NoxStream Logo" class="footer-logo">
       <span>© 2025 NoxStream - Tous droits réservés</span>
     </div>
-  </div>
-</footer>
+  </footer>
 
+  <script>
+    // === PARTICLE SYSTEM ===
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = window.innerWidth > 768 ? 50 : 25; // Fewer particles on mobile
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        
+        // Random colors from our neon palette
+        const colors = ['var(--neon-primary)', 'var(--neon-secondary)', 'var(--neon-accent)'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.background = color;
+        particle.style.boxShadow = `0 0 6px ${color}`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // === SCROLL ANIMATIONS ===
+    function initScrollAnimations() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.category-row').forEach((section, index) => {
+        section.style.animationPlayState = 'paused';
+        section.style.animationDelay = `${index * 0.1}s`;
+        observer.observe(section);
+      });
+    }
+
+    // === ENHANCED HEADER SCROLL EFFECT ===
+    function initHeaderEffects() {
+      let lastScrollY = window.scrollY;
+      const header = document.querySelector('header');
+      
+      window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        
+        if (scrollY > 100) {
+          header.style.background = 'rgba(0, 10, 15, 0.98)';
+          header.style.borderBottomColor = 'rgba(0, 212, 255, 0.3)';
+          header.style.boxShadow = '0 8px 40px rgba(0, 0, 0, 0.7)';
+        } else {
+          header.style.background = 'rgba(0, 10, 15, 0.95)';
+          header.style.borderBottomColor = 'var(--glass-border)';
+          header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
+        }
+        
+        // Hide/show header on scroll
+        if (scrollY > lastScrollY && scrollY > 200) {
+          header.style.transform = 'translateY(-100%)';
+        } else {
+          header.style.transform = 'translateY(0)';
+        }
+        
+        lastScrollY = scrollY;
+      });
+    }
+
+    // === ENHANCED CARD HOVER EFFECTS ===
+    function initCardEffects() {
+      document.querySelectorAll('.scroll-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          // Add dynamic glow based on card type
+          const type = this.querySelector('.type');
+          if (type.classList.contains('anime')) {
+            this.style.setProperty('--card-glow', 'var(--glow-primary)');
+          } else {
+            this.style.setProperty('--card-glow', '0 0 25px rgba(244, 114, 182, 0.4)');
+          }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.style.removeProperty('--card-glow');
+        });
+      });
+    }
+
+    // === ORIGINAL BACKEND FUNCTIONS (PRESERVED) ===
+    // Base de données des animes featured pour la rotation
+    const featuredAnimes = [
+      {
+        id: 'attack-on-titan',
+        title: 'Attack on Titan',
+        description: "L'humanité vit retranchée dans une cité cernée de hauts murs à cause des titans, gigantesques créatures anthropophages. Eren, Mikasa et Armin rêvent de liberté et de découvrir le monde au-delà des murs.",
+        poster: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx16498-buvcRTBx4NSm.jpg',
+        background: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx16498-buvcRTBx4NSm.jpg',
+        badge: '🔥 Tendance',
+        rating: '9.0',
+        year: '2013',
+        genres: 'Action, Drame',
+        duration: '24 min'
+      },
+      {
+        id: 'demon-slayer',
+        title: 'Demon Slayer',
+        description: "Tanjiro Kamado devient un chasseur de démons pour sauver sa sœur transformée en démon et venger sa famille massacrée. Un voyage épique mêlant combat, famille et détermination.",
+        poster: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101922-WBsBl0ClmgYL.jpg',
+        background: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx101922-WBsBl0ClmgYL.jpg',
+        badge: '⚔️ Populaire',
+        rating: '8.7',
+        year: '2019',
+        genres: 'Action, Surnaturel',
+        duration: '23 min'
+      },
+      {
+        id: 'jujutsu-kaisen',
+        title: 'Jujutsu Kaisen',
+        description: "Yuji Itadori rejoint une école secrète de sorciers pour combattre les fléaux, des créatures monstrueuses nées des émotions négatives humaines.",
+        poster: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx113415-LHBAeoZDIsnF.jpg',
+        background: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx113415-LHBAeoZDIsnF.jpg',
+        badge: '🌟 Nouveau',
+        rating: '8.9',
+        year: '2020',
+        genres: 'Action, École',
+        duration: '24 min'
+      },
+      {
+        id: 'death-note',
+        title: 'Death Note',
+        description: "Light Yagami découvre un carnet supernatural qui peut tuer quiconque dont le nom y est écrit. S'ensuit un jeu du chat et de la souris psychologique avec le détective L.",
+        poster: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx1535-kUgkcrfOrkUM.jpg',
+        background: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx1535-kUgkcrfOrkUM.jpg',
+        badge: '🧠 Psychologique',
+        rating: '9.0',
+        year: '2006',
+        genres: 'Thriller, Surnaturel',
+        duration: '23 min'
+      },
+      {
+        id: 'one-piece',
+        title: 'One Piece',
+        description: "Monkey D. Luffy et son équipage de pirates partent à la recherche du trésor légendaire One Piece pour que Luffy devienne le Roi des Pirates.",
+        poster: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21-ELSYx3yMPcKM.jpg',
+        background: 'https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx21-ELSYx3yMPcKM.jpg',
+        badge: '🏴‍☠️ Légendaire',
+        rating: '9.1',
+        year: '1999',
+        genres: 'Aventure, Comédie',
+        duration: '24 min'
+      }
+    ];
+
+    // Variables globales pour le système de rotation
+    let currentFeaturedIndex = 0;
+    let rotationTimer = null;
+    let progressTimer = null;
+    let blacklistedAnimes = JSON.parse(localStorage.getItem('nox_blacklisted_animes')) || [];
+    const ROTATION_INTERVAL = 7000; // 7 secondes
+
+    // Variables globales pour le modal
+    let episodeData = {};
+    let currentTitle = null;
+    let currentLang = 'vf';
+
+    // Chargement des données d'épisodes
+    async function loadEpisodeData() {
+      try {
+        const response = await fetch('data/episodes.json');
+        episodeData = await response.json();
+      } catch (error) {
+        console.error('Erreur lors du chargement des épisodes:', error);
+        // Données de démonstration si le fichier n'existe pas
+        episodeData = {
+          "Attack on Titan": {
+            "vf": ["https://example.com/aot-ep1-vf", "https://example.com/aot-ep2-vf"],
+            "vostfr": ["https://example.com/aot-ep1-vostfr", "https://example.com/aot-ep2-vostfr"]
+          },
+          "Demon Slayer": {
+            "vf": ["https://example.com/ds-ep1-vf", "https://example.com/ds-ep2-vf"],
+            "vostfr": ["https://example.com/ds-ep1-vostfr", "https://example.com/ds-ep2-vostfr"]
+          }
+        };
+      }
+    }
+
+    // Initialisation du système de rotation
+    function initFeaturedRotation() {
+      const availableAnimes = featuredAnimes.filter(anime => 
+        !blacklistedAnimes.includes(anime.id)
+      );
+      
+      if (availableAnimes.length === 0) {
+        blacklistedAnimes = [];
+        localStorage.removeItem('nox_blacklisted_animes');
+      }
+      
+      generateProgressDots();
+      showFeaturedAnime(currentFeaturedIndex);
+      startRotationTimer();
+    }
+
+    // Générer les points de progression
+    function generateProgressDots() {
+      const progressContainer = document.getElementById('featuredProgress');
+      progressContainer.innerHTML = '';
+      
+      const availableAnimes = featuredAnimes.filter(anime => 
+        !blacklistedAnimes.includes(anime.id)
+      );
+      
+      availableAnimes.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'progress-dot';
+        if (index === currentFeaturedIndex) dot.classList.add('active');
+        dot.onclick = () => goToFeaturedAnime(index);
+        progressContainer.appendChild(dot);
+      });
+    }
+
+    // Afficher un anime featured
+    function showFeaturedAnime(index) {
+      const availableAnimes = featuredAnimes.filter(anime => 
+        !blacklistedAnimes.includes(anime.id)
+      );
+      
+      if (availableAnimes.length === 0) return;
+      
+      const anime = availableAnimes[index];
+      const content = document.getElementById('featuredContent');
+      const background = document.getElementById('featuredBackground');
+      
+      // Animation de sortie
+      content.classList.add('fade-out');
+      
+      setTimeout(() => {
+        // Changer le contenu
+        background.style.backgroundImage = `url('${anime.background}')`;
+        
+        content.innerHTML = `
+          <div class="featured-poster">
+            <img src="${anime.poster}" alt="${anime.title}">
+          </div>
+          <div class="featured-info">
+            <div class="featured-badge">${anime.badge}</div>
+            <h1 class="featured-title">${anime.title}</h1>
+            <p class="featured-description">${anime.description}</p>
+            <div class="featured-meta">
+              <span>⭐ ${anime.rating}</span>
+              <span>📅 ${anime.year}</span>
+              <span>🎭 ${anime.genres}</span>
+              <span>⏱️ ${anime.duration}</span>
+            <div class="featured-actions">
+  <a href="/${slugify(anime.title)}" class="featured-btn primary">
+    ▶️ Regarder maintenant
+  </a>
+  <button class="featured-btn secondary">
+    ➕ Ma liste
+  </button>
+</div>
+          </div>
+        `;
+        
+        // Animation d'entrée
+        content.classList.remove('fade-out');
+        content.classList.add('fade-in');
+        
+        // Mettre à jour les indicateurs
+        updateProgressDots();
+        
+      }, 200);
+    }
+
+    // Mettre à jour les points de progression
+    function updateProgressDots() {
+      const dots = document.querySelectorAll('.progress-dot');
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentFeaturedIndex);
+      });
+    }
+
+    // Aller à un anime spécifique
+    function goToFeaturedAnime(index) {
+      currentFeaturedIndex = index;
+      showFeaturedAnime(index);
+      resetRotationTimer();
+    }
+
+    // Passer au suivant
+    function skipToNext() {
+      const availableAnimes = featuredAnimes.filter(anime => 
+        !blacklistedAnimes.includes(anime.id)
+      );
+      
+      currentFeaturedIndex = (currentFeaturedIndex + 1) % availableAnimes.length;
+      showFeaturedAnime(currentFeaturedIndex);
+      resetRotationTimer();
+    }
+
+    // Marquer comme "pas intéressé"
+    function notInterested() {
+      const availableAnimes = featuredAnimes.filter(anime => 
+        !blacklistedAnimes.includes(anime.id)
+      );
+      
+      const currentAnime = availableAnimes[currentFeaturedIndex];
+      blacklistedAnimes.push(currentAnime.id);
+      localStorage.setItem('nox_blacklisted_animes', JSON.stringify(blacklistedAnimes));
+      
+      // Réajuster l'index si nécessaire
+      const newAvailableAnimes = featuredAnimes.filter(anime => 
+        !blacklistedAnimes.includes(anime.id)
+      );
+      
+      if (newAvailableAnimes.length === 0) {
+        blacklistedAnimes = [];
+        localStorage.removeItem('nox_blacklisted_animes');
+        currentFeaturedIndex = 0;
+      } else {
+        if (currentFeaturedIndex >= newAvailableAnimes.length) {
+          currentFeaturedIndex = 0;
+        }
+      }
+      
+      generateProgressDots();
+      skipToNext();
+    }
+
+    // Démarrer le timer de rotation
+    function startRotationTimer() {
+      resetRotationTimer();
+      
+      rotationTimer = setTimeout(() => {
+        skipToNext();
+        startRotationTimer();
+      }, ROTATION_INTERVAL);
+      
+      startProgressAnimation();
+    }
+
+    // Reset du timer
+    function resetRotationTimer() {
+      if (rotationTimer) {
+        clearTimeout(rotationTimer);
+        rotationTimer = null;
+      }
+      if (progressTimer) {
+        clearInterval(progressTimer);
+        progressTimer = null;
+      }
+      
+      const timerFill = document.getElementById('timerFill');
+      if (timerFill) {
+        timerFill.style.width = '0%';
+      }
+    }
+
+    // Animation de la barre de progression
+    function startProgressAnimation() {
+      const timerFill = document.getElementById('timerFill');
+      if (!timerFill) return;
+      
+      let progress = 0;
+      const increment = 100 / (ROTATION_INTERVAL / 100);
+      
+      progressTimer = setInterval(() => {
+        progress += increment;
+        timerFill.style.width = Math.min(progress, 100) + '%';
+        
+        if (progress >= 100) {
+          clearInterval(progressTimer);
+        }
+      }, 100);
+    }
+
+   
+    
+    function renderHistory() {
+      const historyList = document.getElementById('historyList');
+      if (!historyList) return;
+
+      const history = JSON.parse(localStorage.getItem('nox_history')) || [];
+      historyList.innerHTML = "";
+
+      if (history.length === 0) {
+        const li = document.createElement('li');
+        li.style.textAlign = 'center';
+        li.style.color = 'var(--text-muted)';
+        li.textContent = 'Aucun historique disponible';
+        historyList.appendChild(li);
+        return;
+      }
+
+      history.forEach(entry => {
+        const li = document.createElement('li');
+
+        const card = [...document.querySelectorAll('.scroll-card')].find(c => {
+          return c.dataset.title === entry.title;
+        });
+
+        const imgSrc = card ? card.querySelector('img').src : 'https://via.placeholder.com/60x80?text=?';
+
+        const img = document.createElement('img');
+        img.src = imgSrc;
+        img.alt = entry.title;
+
+        const text = document.createElement('span');
+        text.textContent = `${entry.title} - ${entry.lang.toUpperCase()} - Épisode ${entry.episode + 1}`;
+        text.style.color = 'var(--text-primary)';
+
+        li.appendChild(img);
+        li.appendChild(text);
+
+        historyList.appendChild(li);
+      });
+    }
+
+    // === MAIN INITIALIZATION ===
+    window.addEventListener('DOMContentLoaded', async () => {
+      // Initialize new futuristic effects
+      createParticles();
+      initScrollAnimations();
+      initHeaderEffects();
+      initCardEffects();
+      
+      // Load original backend data
+      await loadEpisodeData();
+      renderHistory();
+      
+      // Initialize featured rotation with delay for better UX
+      setTimeout(initFeaturedRotation, 500);});
+      
+    // Dans index.html, remplacez les deux event listeners par celui-ci :
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // ... autres initialisations ...
+  
+  // Un seul event listener pour les cartes
+  document.querySelectorAll('.scroll-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const title = card.dataset.title || card.querySelector('.title')?.textContent.trim();
+      
+      if (!title) {
+        console.warn('Titre non trouvé pour cette carte');
+        return;
+      }
+      
+      const slug = slugify(title);
+      console.log(`Redirection vers: /anime/${slug}`);
+      window.location.href = `/anime/${slug}`;
+    });
+  });
+  
+  // Event listeners pour les boutons "Regarder maintenant" dans featured
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.featured-btn.primary')) {
+      e.preventDefault();
+      const link = e.target.closest('.featured-btn.primary');
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('/')) {
+        window.location.href = href;
+      }
+    }
+  });
+});
+
+    // Featured section pause on hover
+    const featuredSection = document.getElementById('featuredSection');
+    if (featuredSection) {
+      featuredSection.addEventListener('mouseenter', () => {
+        if (rotationTimer) {
+          clearTimeout(rotationTimer);
+          if (progressTimer) {
+            clearInterval(progressTimer);
+          }
+        }
+      });
+      
+      featuredSection.addEventListener('mouseleave', () => {
+        startRotationTimer();
+      });
+    }
+
+    // === ENHANCED SEARCH SYSTEM ===
+    const searchInput = document.querySelector('.search-bar input');
+    const cards = document.querySelectorAll('.scroll-card');
+    const categories = document.querySelectorAll('.category-row');
+
+    const aliasMap = {
+      "csm": "chainsaw man",
+      "aot": "attack on titan",
+      "snk": "attack on titan",
+      "fmab": "fullmetal alchemist brotherhood",
+      "jjk": "jujutsu kaisen",
+      "mha": "my hero academia",
+      "hxh": "hunter x hunter",
+      "ds": "demon slayer",
+      "op": "one piece",
+      "evangelion": "neon genesis evangelion",
+      "lain": "serial experiments lain",
+      "parasyte": "parasyte the maxim",
+      "the promised": "the promised neverland",
+      "tpn": "the promised neverland",
+      "steins": "steins;gate"
+    };
+
+    let searchTimeout;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        const rawQuery = searchInput.value.trim().toLowerCase();
+        const query = aliasMap[rawQuery] || rawQuery;
+
+        let anyMatch = false;
+
+        // Hide everything by default
+        cards.forEach(card => {
+          card.style.display = 'none';
+          card.style.animation = 'none';
+        });
+        categories.forEach(cat => {
+          cat.style.display = 'none';
+        });
+
+        // Remove old no-results message
+        const oldMsg = document.getElementById("no-results");
+        if (oldMsg) oldMsg.remove();
+
+        // If empty query: show everything
+        if (rawQuery === "") {
+          cards.forEach((card, index) => {
+            card.style.display = '';
+            card.style.animation = `slideInFromBottom 0.3s ease-out ${index * 0.05}s both`;
+          });
+          categories.forEach(cat => {
+            cat.style.display = '';
+          });
+          return;
+        }
+
+        // Filter and show matching results
+        let matchIndex = 0;
+        cards.forEach(card => {
+          const title = (card.dataset.title || "").toLowerCase();
+          const match = title.includes(query);
+
+          if (match) {
+            card.style.display = '';
+            card.style.animation = `slideInFromBottom 0.3s ease-out ${matchIndex * 0.05}s both`;
+            const section = card.closest('.category-row');
+            if (section) section.style.display = '';
+            anyMatch = true;
+            matchIndex++;
+          }
+        });
+
+        // Show no results message
+        if (!anyMatch) {
+          const msg = document.createElement("div");
+          msg.id = "no-results";
+          msg.innerHTML = `
+            <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+            Aucun résultat trouvé pour "<span style="color: var(--neon-primary)">${rawQuery}</span>"
+          `;
+          document.querySelector("main").appendChild(msg);
+        }
+      }, 200); // Debounce search
+    });
+
+    // === CAROUSEL NAVIGATION ===
+    document.querySelectorAll('.carousel-nav-wrapper').forEach(wrapper => {
+      const scrollContainer = wrapper.querySelector('.scroll-wrapper');
+      const btnLeft = wrapper.querySelector('.nav-button.left');
+      const btnRight = wrapper.querySelector('.nav-button.right');
+      const scrollAmount = 300;
+
+      btnLeft.addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        btnLeft.style.transform = 'translateY(-50%) scale(0.95)';
+        setTimeout(() => {
+          btnLeft.style.transform = 'translateY(-50%) scale(1)';
+        }, 150);
+      });
+
+      btnRight.addEventListener('click', () => {
+        scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        btnRight.style.transform = 'translateY(-50%) scale(0.95)';
+        setTimeout(() => {
+          btnRight.style.transform = 'translateY(-50%) scale(1)';
+        }, 150);
+      });
+
+      // Touch/swipe support for mobile
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      scrollContainer.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - scrollContainer.offsetLeft;
+        scrollLeft = scrollContainer.scrollLeft;
+        scrollContainer.style.cursor = 'grabbing';
+      });
+
+      scrollContainer.addEventListener('mouseleave', () => {
+        isDown = false;
+        scrollContainer.style.cursor = 'grab';
+      });
+
+      scrollContainer.addEventListener('mouseup', () => {
+        isDown = false;
+        scrollContainer.style.cursor = 'grab';
+      });
+
+      scrollContainer.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollContainer.offsetLeft;
+        const walk = (x - startX) * 2;
+        scrollContainer.scrollLeft = scrollLeft - walk;
+      });
+    });
+
+    // === SMOOTH SCROLL FOR NAVIGATION ===
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start',
+            inline: 'nearest'
+          });
+          
+          // Add visual feedback
+          targetElement.style.transform = 'scale(1.02)';
+          setTimeout(() => {
+            targetElement.style.transform = 'scale(1)';
+          }, 300);
+        }
+      });
+    });
+
+   
+    // === PERFORMANCE OPTIMIZATIONS ===
+    
+    // Lazy loading for images
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            imageObserver.unobserve(img);
+          }
+        }
+      });
+    });
+
+    // Reduced motion support
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      document.documentElement.style.setProperty('--transition-fast', '0.1s');
+      document.documentElement.style.setProperty('--transition-smooth', '0.2s');
+      document.documentElement.style.setProperty('--transition-bouncy', '0.2s');
+    }
+
+    // Resize handler for particles
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        const particlesContainer = document.getElementById('particles');
+        particlesContainer.innerHTML = '';
+        createParticles();
+      }, 500);
+    });
+
+    // === ACCESSIBILITY ENHANCEMENTS ===
+    
+    // Focus management for modal
+    let lastFocusedElement;
+    
+    const originalOpenModal = window.openEpisodeModal;
+    window.openEpisodeModal = function(title, lang) {
+      lastFocusedElement = document.activeElement;
+      originalOpenModal(title, lang);
+      
+      // Focus on close button after modal opens
+      setTimeout(() => {
+        document.querySelector('.close-btn').focus();
+      }, 100);
+    };
+    
+    const originalCloseModal = window.closeEpisodeModal;
+    window.closeEpisodeModal = function() {
+      originalCloseModal();
+      
+      // Return focus to last focused element
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
+    };
+
+    // High contrast mode detection
+    const highContrastQuery = window.matchMedia('(prefers-contrast: high)');
+    highContrastQuery.addEventListener('change', (e) => {
+      if (e.matches) {
+        document.body.classList.add('high-contrast');
+      } else {
+        document.body.classList.remove('high-contrast');
+      }
+    });
+
+    console.log('🚀 NoxStream Futuristic Interface Loaded');
+    console.log('✨ Features: Neon UI, Particle System, Enhanced Animations');
+    console.log('🎮 Controls: Ctrl+K for search, ESC to close modal');
+    
+  </script>
+  <script>
+document.querySelectorAll('.scroll-card').forEach(card => {
+  // Ajoute l'attribut data-title à chaque carte (peut être généré côté JS si besoin)
+  card.addEventListener('click', () => {
+    const title = encodeURIComponent(card.dataset.title || card.querySelector('.title').textContent.trim());
+    window.location.href = `/${title}`;
+  });
+});
+</script>
 <script>
-  const episodeData = {
-    "One Piece": {
-      vf: [
-        "https://video.sibnet.ru/shell.php?videoid=4833453",
-"https://video.sibnet.ru/shell.php?videoid=4833454",
-"https://video.sibnet.ru/shell.php?videoid=4833455",
-"https://video.sibnet.ru/shell.php?videoid=4833456",
-"https://video.sibnet.ru/shell.php?videoid=4833458",
-"https://video.sibnet.ru/shell.php?videoid=4833459",
-"https://video.sibnet.ru/shell.php?videoid=4833462",
-"https://video.sibnet.ru/shell.php?videoid=4833465",
-"https://video.sibnet.ru/shell.php?videoid=4833468",
-"https://video.sibnet.ru/shell.php?videoid=3871795",
-"https://video.sibnet.ru/shell.php?videoid=3871796",
-"https://video.sibnet.ru/shell.php?videoid=3871797",
-"https://video.sibnet.ru/shell.php?videoid=3871798",
-"https://video.sibnet.ru/shell.php?videoid=3871799",
-"https://video.sibnet.ru/shell.php?videoid=4833472",
-"https://video.sibnet.ru/shell.php?videoid=4833473",
-"https://video.sibnet.ru/shell.php?videoid=4833475",
-"https://video.sibnet.ru/shell.php?videoid=4833476",
-"https://video.sibnet.ru/shell.php?videoid=4833479",
-"https://video.sibnet.ru/shell.php?videoid=4833480",
-"https://video.sibnet.ru/shell.php?videoid=4833481",
-"https://video.sibnet.ru/shell.php?videoid=4833483",
-"https://video.sibnet.ru/shell.php?videoid=4729232",
-"https://video.sibnet.ru/shell.php?videoid=4833487",
-"https://video.sibnet.ru/shell.php?videoid=4729225",
-"https://video.sibnet.ru/shell.php?videoid=4833489",
-"https://video.sibnet.ru/shell.php?videoid=4833490",
-"https://video.sibnet.ru/shell.php?videoid=4833492",
-"https://video.sibnet.ru/shell.php?videoid=4833493",
-"https://video.sibnet.ru/shell.php?videoid=4729234",
-"https://video.sibnet.ru/shell.php?videoid=4833499",
-"https://video.sibnet.ru/shell.php?videoid=4729236",
-"https://video.sibnet.ru/shell.php?videoid=4729238",
-"https://video.sibnet.ru/shell.php?videoid=4833500",
-"https://video.sibnet.ru/shell.php?videoid=4833501",
-"https://video.sibnet.ru/shell.php?videoid=4833505",
-"https://video.sibnet.ru/shell.php?videoid=4833507",
-"https://video.sibnet.ru/shell.php?videoid=4833512",
-"https://video.sibnet.ru/shell.php?videoid=4833513",
-"https://video.sibnet.ru/shell.php?videoid=4833515",
-"https://video.sibnet.ru/shell.php?videoid=4729239",
-"https://video.sibnet.ru/shell.php?videoid=4729240",
-"https://video.sibnet.ru/shell.php?videoid=4833520",
-"https://video.sibnet.ru/shell.php?videoid=4833522",
-"https://video.sibnet.ru/shell.php?videoid=4833524",
-"https://video.sibnet.ru/shell.php?videoid=4833527",
-"https://video.sibnet.ru/shell.php?videoid=4833530",
-"https://video.sibnet.ru/shell.php?videoid=4833531",
-"https://video.sibnet.ru/shell.php?videoid=4833534",
-"https://video.sibnet.ru/shell.php?videoid=4729249",
-"https://video.sibnet.ru/shell.php?videoid=4729250",
-"https://video.sibnet.ru/shell.php?videoid=4729241",
-"https://video.sibnet.ru/shell.php?videoid=4833536",
-"https://video.sibnet.ru/shell.php?videoid=4833538",
-"https://video.sibnet.ru/shell.php?videoid=4833541",
-"https://video.sibnet.ru/shell.php?videoid=4833544",
-"https://video.sibnet.ru/shell.php?videoid=4833545",
-"https://video.sibnet.ru/shell.php?videoid=4833548",
-"https://video.sibnet.ru/shell.php?videoid=4833552",
-"https://video.sibnet.ru/shell.php?videoid=4729242",
-"https://video.sibnet.ru/shell.php?videoid=4729244",
+// === ROUTING & NAVIGATION SYSTEM ===
 
-      ],
-      vostfr: [
-        "https://video.sibnet.ru/shell.php?videoid=5411550",
-        "https://video.sibnet.ru/shell.php?videoid=5411551"
-      ]
-    },
-    "Neon Genesis Evangelion": {
-      vf: [
-        "https://video.sibnet.ru/shell.php?videoid=4752634",
-"https://video.sibnet.ru/shell.php?videoid=4752637",
-"https://video.sibnet.ru/shell.php?videoid=4752639",
-"https://video.sibnet.ru/shell.php?videoid=4752642",
-"https://video.sibnet.ru/shell.php?videoid=4752643",
-"https://video.sibnet.ru/shell.php?videoid=4752648",
-"https://video.sibnet.ru/shell.php?videoid=4752652",
-"https://video.sibnet.ru/shell.php?videoid=4752654",
-"https://video.sibnet.ru/shell.php?videoid=4752656",
-"https://video.sibnet.ru/shell.php?videoid=4752658",
-"https://video.sibnet.ru/shell.php?videoid=4752661",
-"https://video.sibnet.ru/shell.php?videoid=4752664",
-"https://video.sibnet.ru/shell.php?videoid=4752666",
-"https://video.sibnet.ru/shell.php?videoid=4752669",
-"https://video.sibnet.ru/shell.php?videoid=4752670",
-"https://video.sibnet.ru/shell.php?videoid=4752672",
-"https://video.sibnet.ru/shell.php?videoid=4752675",
-"https://video.sibnet.ru/shell.php?videoid=4752679",
-"https://video.sibnet.ru/shell.php?videoid=4752681",
-"https://video.sibnet.ru/shell.php?videoid=4752683",
-"https://video.sibnet.ru/shell.php?videoid=4752686",
-"https://video.sibnet.ru/shell.php?videoid=4752690",
-"https://video.sibnet.ru/shell.php?videoid=4752692",
-"https://video.sibnet.ru/shell.php?videoid=4752694",
-"https://video.sibnet.ru/shell.php?videoid=4752696",
-"https://video.sibnet.ru/shell.php?videoid=4752698",
+// Fonction pour créer des slugs
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
 
-      ],
-      vostfr: [
-        "https://video.sibnet.ru/shell.php?videoid=4752067",
-"https://video.sibnet.ru/shell.php?videoid=4752070",
-"https://video.sibnet.ru/shell.php?videoid=4752071",
-"https://video.sibnet.ru/shell.php?videoid=4752072",
-"https://video.sibnet.ru/shell.php?videoid=4752073",
-"https://video.sibnet.ru/shell.php?videoid=4752077",
-"https://video.sibnet.ru/shell.php?videoid=4752078",
-"https://video.sibnet.ru/shell.php?videoid=4752080",
-"https://video.sibnet.ru/shell.php?videoid=4752082",
-"https://video.sibnet.ru/shell.php?videoid=4752084",
-"https://video.sibnet.ru/shell.php?videoid=4752085",
-"https://video.sibnet.ru/shell.php?videoid=4752088",
-"https://video.sibnet.ru/shell.php?videoid=4752090",
-"https://video.sibnet.ru/shell.php?videoid=4752091",
-"https://video.sibnet.ru/shell.php?videoid=4752094",
-"https://video.sibnet.ru/shell.php?videoid=4752095",
-"https://video.sibnet.ru/shell.php?videoid=4752097",
-"https://video.sibnet.ru/shell.php?videoid=4752098",
-"https://video.sibnet.ru/shell.php?videoid=4752099",
-"https://video.sibnet.ru/shell.php?videoid=4752101",
-"https://video.sibnet.ru/shell.php?videoid=4752103",
-"https://video.sibnet.ru/shell.php?videoid=4752105",
-"https://video.sibnet.ru/shell.php?videoid=4752106",
-"https://video.sibnet.ru/shell.php?videoid=4752108",
-"https://video.sibnet.ru/shell.php?videoid=4752109",
-"https://video.sibnet.ru/shell.php?videoid=4752110",
-
-      ]
-    },
-    "Serial Experiments Lain": {
-
-      vf: ["https://video.sibnet.ru/shell.php?videoid=5381398",
-"https://video.sibnet.ru/shell.php?videoid=5381399",
-"https://video.sibnet.ru/shell.php?videoid=5381400",
-"https://video.sibnet.ru/shell.php?videoid=5381402",
-"https://video.sibnet.ru/shell.php?videoid=5381404",
-"https://video.sibnet.ru/shell.php?videoid=5381405",
-"https://video.sibnet.ru/shell.php?videoid=5381406",
-"https://video.sibnet.ru/shell.php?videoid=5381408",
-"https://video.sibnet.ru/shell.php?videoid=5381409",
-"https://video.sibnet.ru/shell.php?videoid=5381411",
-"https://video.sibnet.ru/shell.php?videoid=5381412",
-"https://video.sibnet.ru/shell.php?videoid=5381413",
-"https://video.sibnet.ru/shell.php?videoid=5381414",
-],
-      vostfr:["https://video.sibnet.ru/shell.php?videoid=4725596",
-"https://video.sibnet.ru/shell.php?videoid=4725601",
-"https://video.sibnet.ru/shell.php?videoid=4725604",
-"https://video.sibnet.ru/shell.php?videoid=4725606",
-"https://video.sibnet.ru/shell.php?videoid=4725607",
-"https://video.sibnet.ru/shell.php?videoid=4725611",
-"https://video.sibnet.ru/shell.php?videoid=4725613",
-"https://video.sibnet.ru/shell.php?videoid=4725617",
-"https://video.sibnet.ru/shell.php?videoid=4725619",
-"https://video.sibnet.ru/shell.php?videoid=4725622",
-"https://video.sibnet.ru/shell.php?videoid=4725623",
-"https://video.sibnet.ru/shell.php?videoid=4725625",
-"https://video.sibnet.ru/shell.php?videoid=4725628",
-],
-    },"Attack On Titan": {  
-      vf: [],
-      vostfr: [],
-    },"fullmetal alchemist brotherhood": {
-    vf: [],
-    vostfr: []
-  },
-  "death note": {
-    vf: [],
-    vostfr: []
-  },
-  "my hero academia": {
-    vf: [],
-    vostfr: []
-  },
-  "steins;gate": {
-    vf: [],
-    vostfr: []
-  },
-  "demon slayer": {
-    vf: [],
-    vostfr: []
-  },
-  "hunter x hunter": {
-    vf: [],
-    vostfr: []
-  },
-  "tokyo ghoul": {
-    vf: [],
-    vostfr: []
-  },
-  "mob psycho 100": {
-    vf: [],
-    vostfr: []
-  },
-  "naruto": {
-    vf: [],
-    vostfr: []
-  },
-  "cowboy bebop": {
-    vf: [],
-    vostfr: []
-  },
-  "made in abyss": {
-    vf: [],
-    vostfr: []
-  },
-  "vinland saga": {
-    vf: [],
-    vostfr: []
-  },
-  "erased": {
-    vf: [],
-    vostfr: []
-  },
-  "parasyte the maxim": {
-    vf: [],
-    vostfr: []
-  },
-  "black clover": {
-    vf: [],
-    vostfr: []
-  },
-  "The Promised Neverland": {
-    vf: ["https://video.sibnet.ru/shell.php?videoid=3863596",
-"https://video.sibnet.ru/shell.php?videoid=3863597",
-"https://video.sibnet.ru/shell.php?videoid=3866096",
-"https://video.sibnet.ru/shell.php?videoid=3866099",
-"https://video.sibnet.ru/shell.php?videoid=3868249",
-"https://video.sibnet.ru/shell.php?videoid=3868250",
-"https://video.sibnet.ru/shell.php?videoid=3868252",
-"https://video.sibnet.ru/shell.php?videoid=3868254",
-"https://video.sibnet.ru/shell.php?videoid=3868255",
-"https://video.sibnet.ru/shell.php?videoid=3868256",
-"https://video.sibnet.ru/shell.php?videoid=3868257",
-"https://video.sibnet.ru/shell.php?videoid=3868258",
-],
-    vostfr: ["https://video.sibnet.ru/shell.php?videoid=3564879",
-"https://video.sibnet.ru/shell.php?videoid=3536574",
-"https://video.sibnet.ru/shell.php?videoid=3536459",
-"https://video.sibnet.ru/shell.php?videoid=3540427",
-"https://video.sibnet.ru/shell.php?videoid=3544810",
-"https://video.sibnet.ru/shell.php?videoid=3549575",
-"https://video.sibnet.ru/shell.php?videoid=3554431",
-"https://video.sibnet.ru/shell.php?videoid=3559326",
-"https://video.sibnet.ru/shell.php?videoid=3564389",
-"https://video.sibnet.ru/shell.php?videoid=3569412",
-"https://video.sibnet.ru/shell.php?videoid=3575305",
-"https://video.sibnet.ru/shell.php?videoid=3581228",
-"https://video.sibnet.ru/shell.php?videoid=4203216",
-"https://video.sibnet.ru/shell.php?videoid=4209711",
-"https://video.sibnet.ru/shell.php?videoid=4214066",
-"https://video.sibnet.ru/shell.php?videoid=4218507",
-"https://video.sibnet.ru/shell.php?videoid=4225091",
-"https://video.sibnet.ru/shell.php?videoid=4235975",
-"https://video.sibnet.ru/shell.php?videoid=4245709",
-"https://video.sibnet.ru/shell.php?videoid=4252571",
-"https://video.sibnet.ru/shell.php?videoid=4258998",
-"https://video.sibnet.ru/shell.php?videoid=4263871",
-"https://video.sibnet.ru/shell.php?videoid=4271599",
-] },
-    "Jujutsu Kaisen": {
-    vf: [ "https://video.sibnet.ru/shell.php?videoid=4668025",
-  "https://video.sibnet.ru/shell.php?videoid=4668028",
-  "https://video.sibnet.ru/shell.php?videoid=4668029",
-  "https://video.sibnet.ru/shell.php?videoid=4668030",
-  "https://video.sibnet.ru/shell.php?videoid=4668034",
-  "https://video.sibnet.ru/shell.php?videoid=4668035",
-  "https://video.sibnet.ru/shell.php?videoid=4668038",
-  "https://video.sibnet.ru/shell.php?videoid=4668040",
-  "https://video.sibnet.ru/shell.php?videoid=4668042",
-  "https://video.sibnet.ru/shell.php?videoid=4668044",
-  "https://video.sibnet.ru/shell.php?videoid=4668049",
-  "https://video.sibnet.ru/shell.php?videoid=4668055",
-  "https://video.sibnet.ru/shell.php?videoid=4668061",
-  "https://video.sibnet.ru/shell.php?videoid=4668066",
-  "https://video.sibnet.ru/shell.php?videoid=4668072",
-  "https://video.sibnet.ru/shell.php?videoid=4668077",
-  "https://video.sibnet.ru/shell.php?videoid=4668081",
-  "https://video.sibnet.ru/shell.php?videoid=4668084",
-  "https://video.sibnet.ru/shell.php?videoid=4668086",
-  "https://video.sibnet.ru/shell.php?videoid=4668089",
-  "https://video.sibnet.ru/shell.php?videoid=4668092",
-  "https://video.sibnet.ru/shell.php?videoid=4668096",
-  "https://video.sibnet.ru/shell.php?videoid=4668102",
-  "https://video.sibnet.ru/shell.php?videoid=4668111",
-"https://video.sibnet.ru/shell.php?videoid=5253308",
-  "https://video.sibnet.ru/shell.php?videoid=5253310",
-  "https://video.sibnet.ru/shell.php?videoid=5258312",
-  "https://video.sibnet.ru/shell.php?videoid=5258314",
-  "https://video.sibnet.ru/shell.php?videoid=5263543",
-  "https://video.sibnet.ru/shell.php?videoid=5263545",
-  "https://video.sibnet.ru/shell.php?videoid=5269446",
-  "https://video.sibnet.ru/shell.php?videoid=5278562",
-  "https://video.sibnet.ru/shell.php?videoid=5278171",
-  "https://video.sibnet.ru/shell.php?videoid=5288287",
-  "https://video.sibnet.ru/shell.php?videoid=5298421",
-  "https://video.sibnet.ru/shell.php?videoid=5306222",
-  "https://video.sibnet.ru/shell.php?videoid=5314926",
-  "https://video.sibnet.ru/shell.php?videoid=5324699",
-  "https://video.sibnet.ru/shell.php?videoid=5334985",
-  "https://video.sibnet.ru/shell.php?videoid=5346113",
-  "https://video.sibnet.ru/shell.php?videoid=5355754",
-  "https://video.sibnet.ru/shell.php?videoid=5364778",
-  "https://video.sibnet.ru/shell.php?videoid=5372583",
-  "https://video.sibnet.ru/shell.php?videoid=5380126",
-  "https://video.sibnet.ru/shell.php?videoid=5395745",
-  "https://video.sibnet.ru/shell.php?videoid=5404433",
-  "https://video.sibnet.ru/shell.php?videoid=5413795"],
+// Fonction pour gérer la navigation vers le player
+function navigateToPlayer(title) {
+  if (!title) {
+    console.warn('Titre manquant pour la navigation');
+    return;
+  }
   
-    vostfr: ["https://video.sibnet.ru/shell.php?videoid=4667514",
-  "https://video.sibnet.ru/shell.php?videoid=4667523",
-  "https://video.sibnet.ru/shell.php?videoid=4667532",
-  "https://video.sibnet.ru/shell.php?videoid=4667548",
-  "https://video.sibnet.ru/shell.php?videoid=4667557",
-  "https://video.sibnet.ru/shell.php?videoid=4667566",
-  "https://video.sibnet.ru/shell.php?videoid=4667578",
-  "https://video.sibnet.ru/shell.php?videoid=4667599",
-  "https://video.sibnet.ru/shell.php?videoid=4667621",
-  "https://video.sibnet.ru/shell.php?videoid=4667634",
-  "https://video.sibnet.ru/shell.php?videoid=4667642",
-  "https://video.sibnet.ru/shell.php?videoid=4667648",
-  "https://video.sibnet.ru/shell.php?videoid=4667656",
-  "https://video.sibnet.ru/shell.php?videoid=4667663",
-  "https://video.sibnet.ru/shell.php?videoid=4667667",
-  "https://video.sibnet.ru/shell.php?videoid=4667673",
-  "https://video.sibnet.ru/shell.php?videoid=4667683",
-  "https://video.sibnet.ru/shell.php?videoid=4667689",
-  "https://video.sibnet.ru/shell.php?videoid=4667696",
-  "https://video.sibnet.ru/shell.php?videoid=4667717",
-  "https://video.sibnet.ru/shell.php?videoid=4667725",
-  "https://video.sibnet.ru/shell.php?videoid=4667735",
-  "https://video.sibnet.ru/shell.php?videoid=4667746",
-  "https://video.sibnet.ru/shell.php?videoid=4667756",
-"https://video.sibnet.ru/shell.php?videoid=5190453",
-  "https://video.sibnet.ru/shell.php?videoid=5196965",
-  "https://video.sibnet.ru/shell.php?videoid=5203199",
-  "https://video.sibnet.ru/shell.php?videoid=5210246",
-  "https://video.sibnet.ru/shell.php?videoid=5217464",
-  "https://video.sibnet.ru/shell.php?videoid=5238868",
-  "https://video.sibnet.ru/shell.php?videoid=5246781",
-  "https://video.sibnet.ru/shell.php?videoid=5253009",
-  "https://video.sibnet.ru/shell.php?videoid=5258097",
-  "https://video.sibnet.ru/shell.php?videoid=5263399",
-  "https://video.sibnet.ru/shell.php?videoid=5269261",
-  "https://video.sibnet.ru/shell.php?videoid=5277754",
-  "https://video.sibnet.ru/shell.php?videoid=5288042",
-  "https://video.sibnet.ru/shell.php?videoid=5297930",
-  "https://video.sibnet.ru/shell.php?videoid=5305970",
-  "https://video.sibnet.ru/shell.php?videoid=5314006",
-  "https://video.sibnet.ru/shell.php?videoid=5324440",
-  "https://video.sibnet.ru/shell.php?videoid=5334685",
-  "https://video.sibnet.ru/shell.php?videoid=5345737",
-  "https://video.sibnet.ru/shell.php?videoid=5355176",
-  "https://video.sibnet.ru/shell.php?videoid=5364195",
-  "https://video.sibnet.ru/shell.php?videoid=5372381",
-  "https://video.sibnet.ru/shell.php?videoid=5379934"] },
+  console.log(`Navigation vers: ${title}`);
   
+  // Utiliser le titre exact au lieu du slug pour éviter les problèmes
+  const encodedTitle = encodeURIComponent(title);
+  const targetUrl = `player.html?title=${encodedTitle}&lang=vf&episode=0`;
+  
+  console.log(`URL de destination: ${targetUrl}`);
+  window.location.href = targetUrl;
+}
 
-  };
-
-
-  document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('click', () => {
-    const title = card.querySelector('.card-title').innerText;
-    if (episodeData[title]) {
-      openEpisodeModal(title, 'vf'); // par défaut VF au lancement
+// === MAIN INITIALIZATION ===
+window.addEventListener('DOMContentLoaded', async () => {
+  // Initialize new futuristic effects
+  createParticles();
+  initScrollAnimations();
+  initHeaderEffects();
+  initCardEffects();
+  
+  // Load original backend data
+  await loadEpisodeData();
+  renderHistory();
+  
+  // Initialize featured rotation with delay for better UX
+  setTimeout(initFeaturedRotation, 500);
+  
+  // === EVENT LISTENERS POUR LES CARTES ===
+  document.querySelectorAll('.scroll-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Récupérer le titre de la carte
+      const title = card.dataset.title || card.querySelector('.title')?.textContent?.trim();
+      
+      if (!title) {
+        console.warn('Titre non trouvé pour cette carte:', card);
+        return;
+      }
+      
+      console.log(`Clic sur la carte: "${title}"`);
+      navigateToPlayer(title);
+    });
+  });
+  
+  // === EVENT LISTENERS POUR LES BOUTONS FEATURED ===
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.featured-btn.primary')) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const btn = e.target.closest('.featured-btn.primary');
+      const titleElement = document.querySelector('.featured-title');
+      const title = titleElement?.textContent?.trim();
+      
+      if (!title) {
+        console.warn('Titre non trouvé dans la section featured');
+        return;
+      }
+      
+      console.log(`Clic sur bouton featured: "${title}"`);
+      navigateToPlayer(title);
     }
   });
 });
 
-let currentTitle = null;
-let currentLang = 'vf';
-
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('click', () => {
-    const title = card.querySelector('.card-title').innerText;
-    if (episodeData[title]) {
-      openEpisodeModal(title, 'vf'); // par défaut VF au lancement
-    }
-  });
-});
-
-function openEpisodeModal(title, lang = 'vf') {
-  currentTitle = title;
-  currentLang = lang;
-
-  document.getElementById('modalAnimeTitle').textContent = title;
-  document.getElementById('languageSelector').value = lang;
-
-  updateEpisodeList();
-  document.getElementById('episodeModal').style.display = 'flex';
+// === TEST DE LA NAVIGATION ===
+function testNavigation(title) {
+  console.log(`Test de navigation pour: ${title}`);
+  navigateToPlayer(title);
 }
 
-function updateEpisodeList() {
-  const episodeList = episodeData[currentTitle][currentLang];
-  const selector = document.getElementById('episodeSelector');
-  selector.innerHTML = "";
-
-  episodeList.forEach((_, i) => {
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = `Épisode ${i + 1}`;
-    selector.appendChild(opt);
-  });
-
-  selector.value = 0;
-  updatePlayerSource();
-}
-
-function updatePlayerSource() {
-  const episodeIndex = document.getElementById('episodeSelector').value;
-  const src = episodeData[currentTitle][currentLang][episodeIndex];
-  document.getElementById('animePlayer').src = src;
-
-  // Sauvegarde dans l'historique à chaque changement d'épisode
-  saveToHistory(currentTitle, currentLang, episodeIndex);
-}
-
-// Enregistre dans localStorage l'historique de visionnage
-function saveToHistory(title, lang, episodeIndex) {
-  const history = JSON.parse(localStorage.getItem('nox_history')) || [];
-
-  // Supprime ancienne entrée pour même anime/lang
-  const filtered = history.filter(entry => !(entry.title === title && entry.lang === lang));
-
-  // Ajoute l'entrée la plus récente en tête
-  filtered.unshift({
-    title,
-    lang,
-    episode: Number(episodeIndex),
-    timestamp: new Date().toISOString()
-  });
-
-  // Garde max 20 entrées
-  const trimmed = filtered.slice(0, 20);
-
-  localStorage.setItem('nox_history', JSON.stringify(trimmed));
-
-  // Mets à jour l'affichage direct
-  renderHistory();
-}
-
-// Affiche l'historique dans la page
-function renderHistory() {
-  const historyList = document.getElementById('historyList');
-  if (!historyList) return;
-
-  const history = JSON.parse(localStorage.getItem('nox_history')) || [];
-  historyList.innerHTML = "";
-
-  history.forEach(entry => {
-    const li = document.createElement('li');
-    li.style.cursor = 'pointer';
-    li.style.display = 'flex';
-    li.style.alignItems = 'center';
-    li.style.marginBottom = '8px';
-
-    // Trouve la card dans le DOM avec le même titre
-    const card = [...document.querySelectorAll('.card')].find(c => {
-      return c.querySelector('.card-title').innerText === entry.title;
-    });
-
-    // Récupère l'image si la card existe, sinon chaîne vide
-    const imgSrc = card ? card.querySelector('img').src : '';
-
-    const img = document.createElement('img');
-    img.src = imgSrc;
-    img.alt = entry.title;
-    img.style.width = '50px';
-    img.style.height = 'auto';
-    img.style.marginRight = '10px';
-    img.style.borderRadius = '5px';
-
-    const text = document.createElement('span');
-    text.textContent = `${entry.title} - ${entry.lang.toUpperCase()} - Épisode ${entry.episode + 1}`;
-
-    li.appendChild(img);
-    li.appendChild(text);
-
-    li.addEventListener('click', () => {
-      openEpisodeModal(entry.title, entry.lang);
-      document.getElementById('episodeSelector').value = entry.episode;
-      updatePlayerSource();
-    });
-
-    historyList.appendChild(li);
-  });
-}
-
-
-// Au chargement de la page on affiche l'historique
-window.addEventListener('DOMContentLoaded', () => {
-  renderHistory();
-});
-
-// Changement de langue déclenché par select
-document.getElementById('languageSelector').addEventListener('change', (e) => {
-  currentLang = e.target.value;
-  updateEpisodeList();
-});
-
-// Changement d’épisode dans la liste
-document.getElementById('episodeSelector').addEventListener('change', updatePlayerSource);
-
-function closeEpisodeModal() {
-  document.getElementById('episodeModal').style.display = 'none';
-  document.getElementById('animePlayer').src = "";
-}
-
-//search bar en dessous par touche hehe
-const searchInput = document.querySelector('.search-bar input');
-const cards = document.querySelectorAll('.card');
-
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.toLowerCase();
-
-  cards.forEach(card => {
-    const title = card.querySelector('.card-title').textContent.toLowerCase();
-    const match = title.includes(query);
-    card.style.display = match ? 'block' : 'none';
-  });
-});
-
-  
 </script>
 
 </body>

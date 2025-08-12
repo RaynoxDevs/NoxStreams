@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/index.html",
+    "/player.html", 
+    "/data/*",
+    "/assets/*",
+    "/*.css",
+    "/*.js",
+    "/*.png",
+    "/*.jpg",
+    "/*.ico",
+    "/*.json"
+  ]
+}
